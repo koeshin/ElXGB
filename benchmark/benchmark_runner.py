@@ -156,7 +156,13 @@ class BenchmarkRunner:
         acc_train_elxgb = accuracy_score(y_train, elxgb.predict(X_train_list))
         acc_test_elxgb = accuracy_score(y_test, elxgb.predict(X_test_list))
         print(f" -> ELXGB Train: {acc_train_elxgb:.4f} | Test: {acc_test_elxgb:.4f}")
-        summary["results"]["elxgb"] = {"train_acc": acc_train_elxgb, "test_acc": acc_test_elxgb}
+        summary["results"]["elxgb"] = {
+            "train_acc": acc_train_elxgb, 
+            "test_acc": acc_test_elxgb,
+            "pure_train_time_sec": elxgb.total_pure_train_time,
+            "total_comm_bytes": elxgb.total_comm_bytes,
+            "total_comm_mb": elxgb.total_comm_bytes / 1024 / 1024
+        }
         
         # JSON 요약 저장
         with open(os.path.join(self.results_dir, 'benchmark_summary.json'), 'w') as f:
