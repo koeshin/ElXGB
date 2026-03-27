@@ -1,0 +1,322 @@
+[
+    {
+        "depth": 0,
+        "split": "V12",
+        "split_condition": 481.0,
+        "gain": 896.1121641248537,
+        "children": [
+            {
+                "depth": 1,
+                "split": "V15",
+                "split_condition": 1.0,
+                "gain": 190.8960072474165,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "V1",
+                        "split_condition": 60.0,
+                        "gain": 63.5246399156822,
+                        "children": [
+                            {
+                                "leaf": -1.8343271039257274
+                            },
+                            {
+                                "leaf": -1.0398126463700235
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "V16",
+                        "split_condition": 2.0,
+                        "gain": 429.05176396497905,
+                        "children": [
+                            {
+                                "leaf": -1.5913261050875729
+                            },
+                            {
+                                "leaf": 0.43632773938795655
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "V12",
+                "split_condition": 679.0,
+                "gain": 115.17527601251216,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "V15",
+                        "split_condition": 1.0,
+                        "gain": 28.19733279112279,
+                        "children": [
+                            {
+                                "leaf": -0.9619151251360174
+                            },
+                            {
+                                "leaf": -0.15945330296127563
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 895.0,
+                        "gain": 23.53133686976183,
+                        "children": [
+                            {
+                                "leaf": -0.19559471365638767
+                            },
+                            {
+                                "leaf": 0.38028169014084506
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "depth": 0,
+        "split": "V12",
+        "split_condition": 205.0,
+        "gain": 415.53697037486893,
+        "children": [
+            {
+                "depth": 1,
+                "split": "V12",
+                "split_condition": 129.0,
+                "gain": 37.03284904193811,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 76.0,
+                        "gain": 3.5981035398589256,
+                        "children": [
+                            {
+                                "leaf": -1.1661709857259217
+                            },
+                            {
+                                "leaf": -1.0185876010029693
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "V9",
+                        "split_condition": 1.0,
+                        "gain": 20.15001159244065,
+                        "children": [
+                            {
+                                "leaf": -0.5928323683357049
+                            },
+                            {
+                                "leaf": -1.0185035060314844
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "V9",
+                "split_condition": 1.0,
+                "gain": 164.2618252627426,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "V1",
+                        "split_condition": 26.0,
+                        "gain": 43.007771680075905,
+                        "children": [
+                            {
+                                "leaf": 1.2965728867341895
+                            },
+                            {
+                                "leaf": 0.06903004830930826
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "V1",
+                        "split_condition": 60.0,
+                        "gain": 38.22037440493949,
+                        "children": [
+                            {
+                                "leaf": -0.7425313827948925
+                            },
+                            {
+                                "leaf": 0.510744767759932
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "depth": 0,
+        "split": "V12",
+        "split_condition": 347.0,
+        "gain": 145.92636365457696,
+        "children": [
+            {
+                "depth": 1,
+                "split": "V12",
+                "split_condition": 94.0,
+                "gain": 55.584078492399584,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 76.0,
+                        "gain": 1.805350754985966,
+                        "children": [
+                            {
+                                "leaf": -0.9972803718885004
+                            },
+                            {
+                                "leaf": -0.7744829021965708
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "V11",
+                        "split_condition": 9.0,
+                        "gain": 55.736088181362376,
+                        "children": [
+                            {
+                                "leaf": -0.4467283717322984
+                            },
+                            {
+                                "leaf": 0.27148575431839295
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "V1",
+                "split_condition": 60.0,
+                "gain": 17.39722618942073,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "V10",
+                        "split_condition": 30.0,
+                        "gain": 12.46013849220319,
+                        "children": [
+                            {
+                                "leaf": 0.056593175311844324
+                            },
+                            {
+                                "leaf": 0.662324853700722
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 679.0,
+                        "gain": 6.64276783207422,
+                        "children": [
+                            {
+                                "leaf": 0.9848509717023745
+                            },
+                            {
+                                "leaf": 0.13690183893931637
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "depth": 0,
+        "split": "V6",
+        "split_condition": 38.0,
+        "gain": 53.447028735106024,
+        "children": [
+            {
+                "depth": 1,
+                "split": "V12",
+                "split_condition": 382.0,
+                "gain": 12.652157545645956,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "V11",
+                        "split_condition": 1.0,
+                        "gain": 17.132097254139524,
+                        "children": [
+                            {
+                                "leaf": 0.7600692854205191
+                            },
+                            {
+                                "leaf": -0.7108447869653094
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "V10",
+                        "split_condition": 16.0,
+                        "gain": 3.8491256557454765,
+                        "children": [
+                            {
+                                "leaf": -0.028245727855418224
+                            },
+                            {
+                                "leaf": -0.38385625570742604
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "V11",
+                "split_condition": 8.0,
+                "gain": 49.4118712584422,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "V11",
+                        "split_condition": 6.0,
+                        "gain": 55.70142611641174,
+                        "children": [
+                            {
+                                "leaf": 0.05443459282322222
+                            },
+                            {
+                                "leaf": 0.7874433340202664
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "V10",
+                        "split_condition": 21.0,
+                        "gain": 29.150214879188212,
+                        "children": [
+                            {
+                                "leaf": -0.3485081626625748
+                            },
+                            {
+                                "leaf": 0.2112268475593551
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,1716 @@
+878
+IEEE TRANSACTIONS ON SERVICES COMPUTING, VOL. 17, NO. 3, MAY/JUNE 2024
+ELXGB: An Efﬁcient and Privacy-Preserving
+XGBoost for Vertical Federated Learning
+Wei Xu
+, Hui Zhu
+, Senior Member, IEEE, Yandong Zheng
+, Member, IEEE, Fengwei Wang
+, Member, IEEE,
+Jiaqi Zhao
+, Zhe Liu
+, Senior Member, IEEE, and Hui Li
+, Member, IEEE
+Abstract—With the rapid growth of Internet data volumes, Big
+Data analysis technologies have gradually permeated all aspects of
+life. However, the existence of data silos and the promulgation of
+relevant regulations make it challenging to apply these technolo-
+gies. In this context, federated learning provides a feasible solution.
+Especially, XGBoost schemes for vertical federated learning have
+attracted much attention due to the widespread use of XGBoost.
+However, these schemes have limitations in terms of security or
+efﬁciency. To address these issues, we propose an efﬁcient and
+privacy-preserving vertical federated learning framework based
+on the XGBoost algorithm, namely ELXGB, which achieves secure
+data alignment, XGboost training, and inference services. First, we
+designtwonodesplitalgorithmsbasedonhomomorphicencryption
+and differential privacy, which securely and efﬁciently achieve tree
+node generation to construct the global model. Then, we utilize
+attribute obfuscation and direction obfuscation to achieve a secure
+inference algorithm, which avoids sensitive information leakage
+and protects the global model. Additionally, the global model of
+ELXGB is designed to be centralized, which does not require all
+participants to stay online for inference. Detailed security analysis
+demonstrates that ELXGB is privacy-preserving. Moreover,
+extensive experiments on real-world datasets indicate that ELXGB
+achieves high efﬁciency without sacriﬁcing model accuracy.
+Index Terms—Differential privacy, homomorphic encryption,
+privacy-preserving, vertical federated learning, XGBoost.
+I. INTRODUCTION
+W
+ITH the increasing awareness of data privacy protection,
+the application of Big Data analysis technologies has
+been affected. The regulations like the General Data Protection
+Regulation (GDPR) [1] clearly state that processors should
+strengthen their obligations to protect data privacy. Due to re-
+strictions on data usage, Internet data cannot be easily exchanged
+Manuscript received 11 April 2023; revised 19 April 2024; accepted 20 April
+2024. Date of publication 29 April 2024; date of current version 12 June 2024.
+This work was supported in part by the National Natural Science Foundation of
+ChinaunderGrantU22B2030andGrant62302360,inpartbyShaanxiProvincial
+Key Research and Development Program under Grant 2023-ZDLGY-35, in part
+by the Natural Science Basic Research Plan in Shaanxi Province of China under
+Grant 2023-JC-QN-0699, and in part by China Postdoctoral Science Foundation
+under Grant 2022M722498. (Corresponding author: Hui Zhu.)
+Wei Xu, Hui Zhu, Yandong Zheng, Fengwei Wang, Jiaqi Zhao, and Hui
+Li are with the State Key Laboratory of Integrated Services Networks, Xi-
+dian University, Xi’an 710071, China (e-mail: xuwei_1@stu.xidian.edu.cn;
+zhuhui@xidian.edu.cn; zhengyandong@xidian.edu.cn; wangfengwei@xidian.
+edu.cn; jq_zhao@stu.xidian.edu.cn; lihui@mail.xidian.edu.cn).
+Zhe Liu is with the College of Computer Science and Technology, Nanjing
+University of Aeronautics and Astronautics, Nanjing, Jiangsu 210016, China,
+and also with the Zhejiang Laboratory, Hangzhou, Zhejiang 311100, China
+(e-mail: zhe.liu@nuaa.edu.cn).
+Digital Object Identiﬁer 10.1109/TSC.2024.3394706
+among enterprises. Moreover, model training based on local data
+usually suffers from a limited number of data samples, which
+causes the quality of the trained model to be poor. Consequently,
+Google introduced a state-of-the-art framework for federated
+learning (FL) [2], which provides a feasible solution for the
+above problems.
+Federated learning is a distributed learning method where
+many participants cooperatively train a global model under a
+service provider’s leadership, while participants’ data remains
+on the local side. It is well acknowledged that there are three
+kinds of mainstream federated learning frameworks [3], includ-
+ing horizontal federated learning, vertical federated learning,
+and federated transfer learning. Under these frameworks, many
+federated learning schemes have been proposed by utilizing
+traditional machine learning algorithms. Especially, the XG-
+Boost schemes [4] for vertical federated learning are particularly
+popular due to the wide application of XGBoost. They aim to
+achieve gradient aggregation to ﬁnd the best node split. Existing
+XGBoost schemes solve the above problem based on the security
+techniques of homomorphicencryption(HE), securemulti-party
+computation (SMC), and differential privacy (DP). However,
+they suffer from the limitations of efﬁciency or security [5].
+Speciﬁcally, schemes [6], [7], [8] utilize homomorphic en-
+cryption [9] to train a high-quality boosting tree model. How-
+ever, the encryption overhead might not be tolerable in the
+massive data scenario. Moreover, the intermediate information
+like data labels and instance indexes might be obtained by model
+inversion attacks [10]. To alleviate intermediate information
+leakage, schemes [11], [12], [13] present frameworks based
+on secret sharing [14] and secure multi-party computation [15]
+to build a secure XGBoost model with vertically partitioned
+data. All participants train the global model by data slices from
+others, which protects the data labels and data distributions well.
+However, their global model is distributed among various partic-
+ipants, and each participant just owns a part of the model. When
+providing the inference, all participants must keep synchronized
+and online to perform the services for each user, which results
+in the distributed framework being used to the maximum extent
+and increasing communication overhead for users.
+Tosolvetheaboveproblems,thescheme[16]buildstheglobal
+model based on secret sharing [17] and function encryption [18]
+between the cloud service provider (CSP) and one participant.
+Since all participants precompute the intermediate information,
+divide data into two parts, and send them to CSP and the
+participant, the framework has better performance in terms of
+1939-1374 © 2024 IEEE. Personal use is permitted, but republication/redistribution requires IEEE permission.
+See https://www.ieee.org/publications/rights/index.html for more information.
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+XU et al.: ELXGB: AN EFFICIENT AND PRIVACY-PRESERVING XGBOOST FOR VERTICAL FEDERATED LEARNING
+879
+efﬁciency. However, the global model is leaked to CSP, which
+increases the risk of sensitive data leakage [19]. Moreover, the
+inference process needs to traverse every node of the tree model,
+which generates huge overhead. To further protect the model,
+schemes [7], [11] also utilize differential privacy [20], [21] to
+prevent data labels and leaf weight leakage. However, they lead
+to the loss of model accuracy to some degree. Moreover, almost
+all schemes leak the tree node information, which might leak
+users’ sensitive information by property inference attacks [22]
+during the inference. Therefore, these problems motivate us to
+study an efﬁcient and privacy-preserving XGBoost for a vertical
+federated learning framework.
+To tackle the above problems, we propose an efﬁcient and
+privacy-preserving XGBoost framework for vertical federated
+learning named ELXGB. First, based on Paillier homomorphic
+encryption and differential privacy, we design two node split
+algorithms, which securely and efﬁciently achieve tree node
+generation to construct the global model. Then, by attribute
+obfuscation and direction obfuscation, we design a secure and
+accurate inference algorithm to avoid sensitive information leak-
+ageandprotecttheglobalmodel.Overall,ourmaincontributions
+are the following threefold.
+• First, ELXGB achieves the secure XGBoost training and
+inference: We design two node split algorithms that provide a
+secure training process and ensure the conﬁdentiality of model
+weight and data order. Moreover, we propose two obfuscation
+algorithms to prevent sensitive information leakage during the
+inference, which protect node’s attribute information and the
+global model. Security analysis shows that ELXGB is privacy-
+preserving.
+• Second, ELXGB guarantees a high-accuracy boosting tree
+model, which almost achieves the same accuracy as the XG-
+Boost: ELXGB provides various services, including data align-
+ment, training, and secure prediction. We apply HE to ﬁnish the
+ﬁrst tree built and use DP to ﬁnish other trees built during the
+training. Moreover, the detailed design makes the noise have
+little inﬂuence on the model. The theoretical analysis and ex-
+tensive experimental results demonstrate that ELXGB achieves
+almost the same high accuracy as XGBoost.
+• Third, ELXGB is efﬁcient for model training and inference:
+During the training process, we utilize HE and DP to ﬁnish the
+training efﬁciently. The expensive overhead is only concentrated
+on establishing the ﬁrst node of the ﬁrst tree. Moreover, to
+provide more efﬁcient inference service, the global model is
+securely constructed in the participant who owns data labels. It
+is unnecessary to request all participants to service users in some
+scenarios.
+The rest of this paper is organized as follows. Section II
+describes the system model, threat model, and design goals.
+Section III discusses preliminaries of our scheme. Section IV
+overviews our goals and algorithm designs. Section V pro-
+poses the building blocks. Section VI introduces our scheme.
+Section VII analyzes the security of our scheme. Section VIII
+evaluates various performance aspects of the proposed frame-
+work.SectionIXintroducessomeofthecloselyrelatedschemes.
+Section X discusses here security and optimization extensions.
+Finally, Section XI concludes the paper.
+Fig. 1.
+System model under consideration.
+II. PROBLEM FORMULATION
+In this section, we formally describe our system model and
+threat model, and then identify our design goals.
+A. System Model
+Our model mainly focuses on designing an efﬁcient and
+privacy-preserving XGBoost framework for vertical federated
+learning,whichinvolvesfourtypesofentities(atrustedauthority
+TA, a cloud service provider CSP, multiple participants {P1, . . .,
+PK} and users), as shown in Fig. 1. The active party PK, who
+wants to obtain an accurate model, initiates a crowd-sourced
+learning task, publishes the corresponding rewards on a TA,
+and calls for contributions from the public. The interested
+participants {Pk}K−1
+1
+, also called the passive parties, submit
+their respective attributes to TA, and TA marks each attribute
+with a serial number, which will be sent to the corresponding
+parties. Moreover, all participants have vertically distributed
+data, and PK also has the data labels. The participants are large
+organizations and they do not drop out during the training or
+inference. After ﬁnishing these consensuses, the system starts
+the initialization. First, TA generates secret keys and distributes
+corresponding keys to participants. Then, all participants match
+their data with the assistance of CSP for model training. Dur-
+ing the training, PK iteratively trains the global model with
+{Pk}K−1
+1
+. To get a better user experience from PK, the users
+ask a request for service keys from TA. Moreover, CSP also
+receives the corresponding key to assist PK to design a personal
+service for the users.
+B. Threat Model
+In our threat model, we consider that participants and CSP
+are honest-but-curious [23]. And we assume that participants do
+not collude with CSP due to the conﬂict of interest. Under these
+assumptions, ELXGB should ensure private data security and
+resist the following threat model. First, during data alignment,
+CSP honestly executes Private Set Intersection (PSI). However,
+it might utilize received information to infer sensitive attributes
+of all participants (e.g., name, wohnort, hobby, etc). Then,
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+880
+IEEE TRANSACTIONS ON SERVICES COMPUTING, VOL. 17, NO. 3, MAY/JUNE 2024
+during the training process, participants collaboratively train the
+boosting tree model under the leadership of PK, where {Pk}K−1
+1
+are curious about data labels of PK and PK is also craving for
+inferring data characteristics of {Pk}K−1
+1
+, such as data order and
+instance distributions. Especially, {Pk}K−1
+1
+attempt to utilize
+interactive information to infer PK’s sensitive information by
+model inversion attacks [10], [19]. During the inference, CSP
+and PK might utilize the tree nodes attributes to obtain the sen-
+sitive information of {Pk}K−1
+1
+and users by property inference
+attacks [22]. Moreover, CSP is also curious about the global
+model, and it attempts to steal the global model. In addition, it is
+worth noting that there may be some other active attacks (e.g.,
+poisoning attack [24], backdoor attack [25], etc.) in FL. Since
+our scheme mainly focuses on achieving privacy-preserving
+boosting tree model training and inference, these attacks are
+currently out of the scope of this paper and will be considered
+in future work.
+C. Design Goals
+Based on the system and threat models mentioned above,
+in our scheme, we aim to achieve an efﬁcient and privacy-
+preserving XGBoost framework for vertical federated learning
+under the premise of ensuring security. Speciﬁcally, ELXGB
+should satisfy the following two objectives.
+• Security: Under the honest-but-curious assumptions, CSP,
+the active party, and the passive parties might be interested in
+information from each other. Therefore, ELXGB needs to pro-
+tect the privacy of ID, data labels, data characteristics, attributes
+information, and global model.
+• Efﬁciency: When training a large scale of data, security
+techniques such as HE used in XGBoost model will incur huge
+overhead. Therefore, ELXGB needs to design efﬁcient algo-
+rithms to achieve data alignment, model training, and inference
+service, as shown in Fig. 1.
+III. PRELIMINARIES
+In this section, we brieﬂy review one of the most widely
+used boosting tree models - XGBoost, Paillier cryptosystem,
+and differential privacy, which serve as the basis of our scheme.
+For a clear description, the commonly used notations are listed
+in Table I.
+A. XGBoost
+XGBoost [4] is an efﬁcient and widely used boosting tree
+algorithm, which integrates many weak classiﬁers, such as
+CART [26], to form a strong classiﬁer. Given a dataset D =
+{ (Xi, yi) } (|D| = n, Xi ∈Rm, yi ∈R) with n samples and m
+attributes, XGBoost predicts the i-th instance by using T weak
+classiﬁers as follows.
+ˆyi =
+T
+
+t=1
+ft(Xi) =
+T
+
+t=1
+wi
+(1)
+Each ft(·) is a decision tree and ft(Xi) maps Xi to the corre-
+sponding leaf weight wi of ft(Xi). ft(·)t:1≤t≤T are constructed
+one by one. When ft(·) is constructed, the objective function
+TABLE I
+NOTATIONS IN MODEL
+L(t) can be deﬁned as
+L(t) =
+n
+
+i
+l(yi, ˆyt
+i) + Ω(ft)
+where Ω(f) = γΓ + 1
+2λ∥W∥2, and l is the loss function. Ω is
+a regularization item, where Γ is the number of leaf nodes in
+ft(·) and W is the set of weight values in ft(·)’s leaf nodes.
+The objective function of model can be optimized based on the
+second-order Taylor expansion.
+L(t) ≃
+n
+
+i
+[l(yi, ˆy(t−1)
+i
+) + gt
+ift(Xi) + 1
+2ht
+if 2
+t (Xi)] + Ω(ft)
+(2)
+where gt
+i = ∂ˆy(t−1)l(yi, ˆy(t−1)), ht
+i = ∂2
+ˆy(t−1)l(yi, ˆy(t−1)). gt
+i and
+ht
+i are the ﬁrst and second derivatives of the loss function respec-
+tively on t-th tree. Minimizing the objective function above is
+equivalent to maximizing the gain of each node [4]. Therefore,
+to construct the t-th tree, the model needs to split nodes so that
+each node maximizes the gain GI as follows
+GI = 1
+2
+ (
+i∈IL gt
+i)2
+
+i∈IL ht
+i + λ + (
+i∈IR gt
+i)2
+
+i∈IR ht
+i + λ −(
+i∈I gt
+i)2
+
+i∈I ht
+i + λ
+
+−γ
+(3)
+until it reaches the maximum tree depth, where I is the sample
+index set in a node and I = IR + IL. By sorting each column
+attribute in advance, I can be divided into different sets. At
+the same time, the gradients gt
+i and ht
+i are counted through the
+indexes to obtain the maximum gain of each node. When the
+optimal tree structure is built, the optimal weight w∗
+j of the leaf
+node can be computed by the following equation, where Ij is
+the sample index set of the node.
+w∗
+j = wi∈Ij = −
+
+i∈Ij gt
+i
+
+i∈Ij ht
+i + λ
+(4)
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+XU et al.: ELXGB: AN EFFICIENT AND PRIVACY-PRESERVING XGBOOST FOR VERTICAL FEDERATED LEARNING
+881
+B. Paillier
+As one of the most popular homomorphic encryption
+schemes, Paillier cryptosystem [9] is widely used in federated
+learning [27], [28]. It can be described as follows.
+• Paillier.KeyGen(κ): Given a security parameter κ and
+two big prime numbers p, q with |p| = |q| = κ, compute n =
+pq, λ = lcm(p −1, q −1), where lcm is the lowest common
+multiple. Then, select a random number g ∈Z∗
+n2, satisfying
+gcd(L(gλ mod n2), n) = 1, where L(x) = x−1
+n . Next, compute
+μ = L(gλ mod n2)−1 mod n. The public key is mpk = (n, g)
+and the secret key is msk = (λ, μ).
+• Paillier.Enc(mpk, m): For any message m ∈Zn, select a
+random number r ∈Z∗
+n and the ciphertext can be calculated
+with mpk as c = gm · rn mod n2.
+• Paillier.Dec(msk, c): For any ciphertext c ∈Z∗
+n2, the plain-
+text can be retrieved with the secret key msk through computing
+m = L(cλ mod n2) · μ mod n.
+The additive homomorphism of Paillier means: any two ci-
+phertexts [[m1]] and [[m2]] satisfy [[m1]] · [[m2]] →[[m1 + m2]].
+The scalar multiplication of Paillier means: a plaintext m1
+and a ciphertext [[m2]] satisfy [[m2]]m1 →[[m1 · m2]].
+C. Differential Privacy
+Differential privacy (DP) is an efﬁcient and privacy-
+preserving technique. This technique can get the invariable
+nature of statistical analysis while sacriﬁcing certain accuracy to
+ensure data security. The deﬁnition of differential privacy [29]
+is as follows:
+Deﬁnition 1 ((ϵ, δ)-differential privacy): Given a randomized
+algorithm A, result(A) represents the set composed of all out-
+puts of the algorithm. For any two datasets X and Y, if the two
+differ by one record, any subset S on result(A) satisﬁes
+Pr[A(X) ∈S] ≤eϵ · Pr[A(Y) ∈S] + δ
+where ϵ expresses privacy parameter and δ represents failure
+probability. When δ = 0, it can be considered ϵ-differential
+privacy [30].
+Deﬁnition 2 (Sensitivity): Given a function A: X →Rd, Y →
+Rd , the sensitivity of function A is as follows:
+ΔA = max
+X,Y ∥A(X) −A(Y) ∥1 .
+The sensitivity of the function reﬂects the maximum possible
+change due to the addition or removal of a single sample.
+IV. OVERVIEW
+In this section, we describe our goals and algorithm designs
+from a high level. In the vertical federated XGBoost scheme,
+there is one active party PK and K −1 passive parties {Pk}K−1
+1
+,
+and each party owns the data set Di:1≤i≤K locally. Moreover,
+PK has the data label set Y . The system is to maximize each
+node’s gain of the XGBoost model through federated learning.
+Assuming that its task is a classiﬁcation task, the gradients can be
+calculated as gi = yi,pred −yi and hi = yi,pred · (1 −yi,pred)
+by PK, and yi,pred is deﬁned:
+yi,pred = −
+1
+1 + e−ˆyi = −
+1
+1 + e−T
+t=1 wt
+i
+Then, the problem can be described as follows.
+To ﬁnd the best split, PK needs to calculate the maximum
+gain as (3) of each node from all attributes. The gain can be
+further decomposed into calculating the sums 
+IL gi, 
+IR gi
+and 
+I gi (resp. hi). Then, IL (resp. IR) with the maximum
+gain will be used as I for the next left (resp. right) node
+split. During the process, these sample index sets I from the
+passive parties involve their data distribution, and the gradients
+from the active party involve the data labels. There are security
+needs to aggregate gradients by the samples, which would not
+disclose sensitive information to each other. Moreover, it is also
+challenging to balance efﬁciency and security.
+Therefore, to achieve an efﬁcient and privacy-preserving XG-
+Boost scheme for vertical federated learning, we design and
+ﬁnish our goals from the following three aspects.
+• Goal 1: How to efﬁciently train the global model inde-
+pendently of the model structure while ensuring security? In
+almost schemes, although they can ﬁnish the model training,
+they still suffer from the limitations of efﬁciency and security.
+Moreover, these schemes will generate more overhead as the
+model structure becomes richer. Therefore, we propose two node
+splitalgorithm:HE-basednodesplit(HENS)andDP-baesdnode
+split (DPNS), to ﬁnish the model training. We utilize HENS to
+construct the ﬁrst tree and utilize DPNS to construct other trees.
+The expensive overhead is only concentrated on establishing
+the ﬁrst node of the ﬁrst tree. Moreover, the gradient cache
+and gradient recovery mechanisms are used to ensure the model
+accuracy.
+• Goal 2: How to securely construct the global model to
+provide efﬁcient inference services? Almost privacy-preserving
+XGBoost schemes construct distributed models among all par-
+ticipants, which might protect each node information of the
+global models. However, the communication cost of users is
+greatly increased during the inference, which makes these
+schemes inﬂexible. Constructing the global model in one partici-
+pantprovidesafeasiblesolution,butitalsobringsnewproblems.
+Exposure of node’s attribute information might leak split thresh-
+old [22]. Therefore, we design an attribute obfuscation algorithm
+to hide the node information, which allows us to construct the
+globalmodelonPK.Moreover,italsoprotectsthesplitthreshold
+of nodes and data distributions of {Pk}K−1
+1
+.
+• Goal 3: How to protect the data privacy during the in-
+ference? Based on Challenge 2, if the secure global model is
+built in PK, PK needs to ﬁnish the inference for users. To
+reduce the user’s communication overhead, CSP assists users
+to ﬁnish the inference. However, the sensitive information of
+users and the global model might be leaked during the process.
+Therefore, the attribute obfuscation algorithm is used to protect
+the sensitive information of users. Moreover, we propose a
+direction obfuscation algorithm to protect the split directions
+and the global model.
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+882
+IEEE TRANSACTIONS ON SERVICES COMPUTING, VOL. 17, NO. 3, MAY/JUNE 2024
+Fig. 2.
+Example about the local/global buckets division methods. The left
+represents bucket B about the ﬁrst split, and the right represents B about the next
+left node split. The local proposal in the up-right side, and the global proposal
+is in the bottom-right side.
+V. BUILDING BLOCKS
+In this section, we ﬁrst introduce a bucket generation and up-
+date method. Then, we present an HE-based node split algorithm
+(HENS) and a DP-based node split algorithm (DPNS), which are
+building blocks of our scheme.
+A. Bucket Generation and Update
+One of the key problems in tree learning models is to ﬁnd the
+best split by (3). Therefore, to get IL, IR, and I, XGBoost [4]
+provides two approximate approaches to update the bucket: the
+local proposal and the global proposal.
+First, the bucket generation divides the values of each attribute
+into multiple buckets. Each bucket is denoted by B and corre-
+sponds to
+1
+eps N-dimensional binary vectors. Each vector is
+denoted by I, where I[j] = 1 if the corresponding data is in the
+vector and I[j] = 0 otherwise for 1 ≤j ≤N. Then, the local
+and global proposal are utilized to update the bucket. The local
+proposal prefers accuracy, meaning participants must reorder
+every update’s attribute value. The global proposal prefers efﬁ-
+ciency, meaning participants can prepare the buckets for ﬁnding
+the best split in advance. The global proposal with more
+1
+eps
+can also reach the same accuracy as the local proposal [4].
+An example about the local/global buckets division methods
+is shown in Fig. 2. In our scheme, we use the global proposal
+for efﬁciency. Of course, our scheme is also suitable for the
+local proposal.
+B. HE-Based Node Split Algorithm (HENS)
+The HENS algorithm utilizes Paillier homomorphic encryp-
+tion to privately achieve the tree node generation. Especially,
+internal nodes and leaf nodes will be built in different ways as
+shown below.
+1) Internal Nodes Building: The goal of an internal node
+building is to ﬁnd the best split attribute and the split value in
+Algorithm 1: HE-based Node Split Algorithm (HENS).
+the current node. Detailed steps of the algorithm is introduced
+as below.
+Step 1: Pre-preparation
+First, PK calculates the predicted results and gradients using
+the loss function, and maintains accuracy by a scale factor △as
+y1
+i,pred = −
+1
+1 + e−w0
+i , 1 ≤i ≤N
+[[g1
+i:1≤i≤N]] = [[△· (y1
+i,pred −yi)]]
+[[h1
+i:1≤i≤N]] = [[△· y1
+i,pred(1 −y1
+i,pred)]].
+(5)
+Then, PK sends gradients to {Pk}K−1
+1
+. In addition, to construct
+the ﬁrst node of the ﬁrst tree, PK initializes an N-dimensional
+vector Id=1,1 = [1, 1, . . . , 1] and sends it to {Pk}K−1
+1
+.
+Step 2: Best split ﬁnding
+On receiving Id,1, {Pk}K
+1 utilizes Id,1 to update its bucket
+B as shown in Fig. 2. After that, to obtain the gain on the d-th
+node of the ﬁrst tree about the j-th I of the m-th B, {Pk}K−1
+k=1
+computes
+
+IL
+g1
+i
+m,j,d,1
+= [[g1
+1]]Im,j,d,1
+1
+· [[g1
+2]]Im,j,d,1
+2
+· · · [[g1
+N]]Im,j,d,1
+N
+
+IL
+h1
+i
+m,j,d,1
+= [[h1
+1]]Im,j,d,1
+1
+· [[h1
+2]]Im,j,d,1
+2
+· · · [[h1
+N]]Im,j,d,1
+N
+.
+Let
+⟨[[gIL]]⟩d,1 = {{[[
+IL gi]]m,j,d,1}
+M−MPK
+m=1
+}
+1
+eps
+j=1
+and
+⟨[[hIL]]⟩d,1 ={{[[
+ILhi]]m,j,d,1}
+M−MPK
+m=1
+}
+1
+eps
+j=1. Then, {Pk}K−1
+1
+send ⟨[[gIL]]⟩d,1 and ⟨[[hIL]]⟩d,1 to PK. To avoid wasting time
+to wait the passive participants with slow connections, PK can
+choose to start the clock after collecting the ﬁrst encrypted
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+XU et al.: ELXGB: AN EFFICIENT AND PRIVACY-PRESERVING XGBOOST FOR VERTICAL FEDERATED LEARNING
+883
+value. After a decent interval, PK rejects to receive the values.
+The clock time can be adjusted according to the experience.
+Then, PK decrypts the received ⟨[[gIL]]⟩d,1 and ⟨[[hIL]]⟩d,1, and
+calculates 
+IL gm,j,d,1
+i
+. It continues
+
+IR
+gm,j,d,1
+i
+=
+
+I
+gm,j,d,1
+i
+−
+
+IL
+gm,j,d,1
+i
+and computes the gain Gm,j,d,1
+I
+as (3). Then, it computes
+Gd,1
+I
+= max
+
+Gm,j,d,1
+I
+|1 ≤m ≤M, 1 ≤j ≤
+1
+eps
+	
+.
+If Gd,1
+I
+is from {Pk}K−1
+1
+, PK sends {m, j} to PI who owns
+Gd,1
+I , and requests PI to build a tree node.
+Step 3: Node construction based on attribute obfuscation
+On receiving {m, j}, PI identiﬁes the vector Im,j,d,1
+L
+and the
+split threshold τ d,1. Constructing a tree node requires not only
+{Im,j,d,1
+L
+, τ d,1} but also the attribute. However, the exposure
+of attributes increases the probability of threshold leakage by
+property inference attacks [22]. To improve the security of
+threshold, PI constructs the encrypted threshold vector T d,1
+0
+by attribute obfuscation as
+T d,1
+0
+= {[[νd,1]], [[rd,1
+1 ]], [[rd,1
+2 ]], . . . , [[rd,1
+M ]]},
+where T d,1
+0,νd,1 = [[rd,1
+νd,1]] = [[τ d,1]], {ri̸=vd,1}M
+i=1 are some ran-
+dom numbers, and νd,1 ∈[1, M] is the serial number of the
+attribute. In this way, the attribute can be hidden in the vector.
+Then, PI sends {Im,j,d,1
+L
+, T d,1
+0
+} to PK.
+2) Leaf Nodes Building: When a leaf node is built, PK directly
+generates the leaf node’s weight as (4) based on the sample index
+set I of the leaf node and the current gradients.
+C. DP-Based Node Split Algorithm (DPNS)
+The DPNS algorithm utilizes differential privacy to privately
+achieve the tree node generation. Especially, leaf nodes will be
+built in the same way as the HENS algorithm. Meanwhile, the
+internal nodes are built as follows.
+Step 1: Pre-preparation
+First, PK generates the predicted results and calculates plain-
+text gradients by (5). Then, PK calculates the sensitivity of gt
+(resp. ht) as follows:
+Δgt = max ∥g{wt} −g{w′t} ∥
+= 2˜C, ∀gt ≤C
+Then, it executes differential privacy algorithm to protect gra-
+dients as Algorithm 3, where σ ≥
+
+2 ln( 1.25
+δ )/ϵ, and N ∼
+N(Δ2
+gtσ2) is a Gaussian noise generation. Moreover, PK stores
+gt and ht without noise in the gradient cache to maintain
+high accuracy when generating leaf weight, and sends ˜gt, ˜ht to
+{Pk}K−1
+1
+. To construct the ﬁrst node of the t-th tree, PK sends
+Id=1,t to {Pk}K−1
+1
+.
+Step 2: Best split ﬁnding
+On receiving Id,t, {Pk}K
+1 update its bucket B and calculate
+the local maximum gain Gk,d,t
+I
+as (3). Then, the passive parties
+Algorithm 2: DP-based Node Split Algorithm (DPNS).
+Algorithm 3: Centralized Differential Privacy Algorithm.
+{Pk}K−1
+k=1 send their maximum gains to PK. Next, PK computes
+Gd,t
+I
+= max{Gk,d,t
+I
+|1 ≤k ≤K}.
+If Gd,t
+I
+is from {Pk}K−1
+1
+, PK sends Gd,t
+I
+to PI who owns Gd,1
+I .
+Then, PI seeks m, j of Gd,1
+I
+and ﬁnishs node construction with
+PK.
+Step 3: Node construction based on attribute obfuscation
+The step is skipped because it is the similar as HESN.
+VI. OUR SCHEME
+In this section, we describe how to train an efﬁcient and
+privacy-preserving vertical federated learning model, and pro-
+vide secure inference for users. The scheme includes three
+phases, including system initialization, secure model training,
+and secure inference as shown below.
+A. System Initialization
+The system initialization phase includes two processes, i.e.,
+key distribution and data alignment.
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+884
+IEEE TRANSACTIONS ON SERVICES COMPUTING, VOL. 17, NO. 3, MAY/JUNE 2024
+Fig. 3.
+Overview of model training in ELXGB. The ﬁrst tree is built by HENS and the other trees are built by DPNS.
+Algorithm 4: Secure Data Alignment.
+1) Key Distribution: TA ﬁrst generates an HMAC function
+with a secret key ssk as Hssk(·) and sends Hssk(·) to all partic-
+ipants. Then, it generates a pair of Paillier’s keys (PKS, SKS),
+and publishes PKS. Meanwhile, PK generates a pair of Paillier’s
+keys (PKT , SKT ) and publishes PKT . Then, it chooses (ϵ, δ) to
+protect gradients of the trained model.
+2) Data Alignment: To train a global model in the vertical
+federated learning framework, we design a secure alignment
+algorithm, in which {Pk}K
+1 match their data with the assistance
+of the CSP. As shown in Algorithm 4, each Pk ﬁrst hashes their
+IDs using Hssk(·) and gets a set of hash values, denoted by
+Hk for 1 ≤k ≤K, which can be ﬁnished ofﬂine. Then, Pk
+generates themap ⟨Hk, IDk⟩andsends Hk toCSP. Onreceiving
+{Hk}K
+1 , CSP chooses the Hi with the shortest size and generates
+an Ni-dimensional zero vector L = [0, 0, . . . , 0]. Then, for each
+hash value valj ∈Hi, CSP checks whether all of {Hk}1≤k̸=i≤K
+contain it. If yes, CSP sets L[j] = 1. Finally, CSP returns a set
+of hash values {valj ∈Hi|L[j] = 1}, which corresponds to the
+IDs that all participants have in common. On receiving {valj ∈
+Hi|L[j] = 1}, {Pk}K
+1 identify the corresponding identiﬁes and
+attribute data for model training.
+B. Secure Model Training
+The model training phase includes two processes, i.e., model
+parameters initialization and tree building. The complete proce-
+dure of model training is shown in Fig. 3.
+1) Model Parameters Initialization: First, PK sets the max-
+imum tree number to be T, the maximum tree depth to be
+D, and the initial model weight w = (w0
+1, w0
+2, . . . , w0
+N) to be
+w = (0, 0, . . . , 0). Then, it sends T and D to all passive partic-
+ipants.
+2) Tree Building: The tree model is efﬁciently built baesd on
+HENS and DPNS. To ensure the security and performance of
+model, we give the optimal conﬁguration due to Theorem 1,
+where all participants collaboratively build the trees {ft(·)}T
+t=1
+as the following steps.
+Step 1: {Pk}K
+1 build the ﬁrst tree f1(·) by repeatedly calling
+the HE-based node split algorithm in Section V-B to build the
+tree node of f1(·).
+Step 2: When training t-th tree, PK chooses the appropriate
+parameters ϵ and δ to protect the gradients. Then, {Pk}K
+1 build
+the t-th tree ft(·) by repeatedly calling the DP-based node split
+algorithm in Section V-C to build the tree node of ft(·) for 2 ≤
+t ≤T.
+Finally, PK obtains the training model y = T
+t=1 ft(·).
+Correctness of model training: We show the correctness of
+our model training scheme by proving that the HENS/DPNS
+algorithms make tree nodes split lossless.
+Theorem 1: The HENS algorithm can make node split loss-
+less and the weight is concentrated on the ﬁrst tree.
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+XU et al.: ELXGB: AN EFFICIENT AND PRIVACY-PRESERVING XGBOOST FOR VERTICAL FEDERATED LEARNING
+885
+Proof: We choose the best split by homomorphic encryption
+on the ﬁrst tree. The [[gt
+i]] and [[ht
+i]] are encrypted by using Paillier
+cryptosystem. We can decrypt [[
+IL gi]]m,j,d,t and get lossless
+
+IL gm,j,d,t
+i
+as follows.
+
+IL
+gi
+m,j,d,t
+= [[gt
+1]]Im,j,d,t
+1
+· [[gt
+2]]Im,j,d,t
+2
+· · · · · [[gt
+N]]Im,j,d,t
+N
+= [[gt
+1 · Im,j,d,t
+1
++ · · · + gt
+N · Im,j,d,t
+N
+]], t = 1
+It means that we can calculate the maximum gain GI as
+primitive XGBoost, which ensures our model is lossless on the
+ﬁrst tree. As (5), gt
+i is usually calculated by yt
+i,pred −yi and we
+can ﬁnd gt
+i is max on the ﬁrst tree owning to yt
+i,pred will be
+closer to yi after training. It is obvious that the weight is max
+on the ﬁrst tree by (4). The weight might affect the security and
+accuracy of model [6], meaning that the ﬁrst tree should be built
+by HENS.
+Theorem 2: The DPNS algorithm can also make node split
+almost lossless.
+Proof. The ˜gt
+i and ˜ht
+i are added Gaussian Noise on the other
+trees that protect data labels. When the training data is large,
+⟨˜gt⟩2 approximates to ⟨gt⟩2. Therefore, gains in each I can be
+calculated by (3). However, to maintain the model accuracy,
+PK utilizes gt and ht from the gradient cache to calculate wt
+on the current tree by (4), which are secret to PI. Moreover,
+the corresponding experiments shows that our model is highly
+accurate as the XGBoost.
+C. Secure Inference
+In this section, we describe how to ﬁnish the secure inference
+for users of PK. The secure inference includes three phases: at-
+tribute obfuscation, direction obfuscation, and service response.
+During the inference, to provide a personal service for the
+users, PK ﬁnishes the seucre inference with the assistance of
+CSP. The identiﬁed CSP needs to ask a request for SKT to TA,
+and TA sends SKT securely to CSP.
+1) Attribute Obfuscation: To obtain a personal service from
+PK, the registerd user gets the serial numbers about attributes
+and PKS from TA. According to the serial numbers, the user
+utilizes the local information to generate the encrypted vector
+T1 by PKS as follows
+T1 = {0, [[−u1]], [[−u2]], . . . , [[−uM]]}
+(6)
+where ui:1≤i≤M is the speciﬁc information corresponding to
+each attribute of the user, and i is the serial number correspond-
+ing to the attribute. The encrypted vector T1 is sent to the active
+party PK, which can avoid knowing which attribute is used to
+split.
+2) Direction Obfuscation: On receiving T1, PK executes
+the direction obfuscation as Algorithm 5. First, PK initializes
+the encrypted vector T d,t
+3
+for the d-th node of the t-th tree.
+Then,PK chooses a random sign sd,t, and numbers {nd,t
+1,i}M
+i=1,
+{nd,t
+2,i}M
+i=1, satisfying sd,t = (−1|1), {nd,t
+1,i}M
+i=1 ≫{nd,t
+2,i}M
+i=1 >
+0, which are used to prevent the split direction from being known
+by the CSP. Satisfying T d,t
+3,0 = T d,t
+0,0 , PK calculates {T d,t
+3,i }M
+i=1 as
+Algorithm 5: Direction Obfuscation.
+follows,
+{T d,t
+3,i }M
+i=1 = ((T d,t
+0,i T1,i)n d,t
+1,i ˆcd,t
+i )sd,t
+where ˆcd,t
+i
+= [[nd,t
+2,i]], and sends T d,t
+3
+to CSP.
+Onreceivingtheencryptedvector,CSPdecryptstheﬁrstvalue
+of the vector by SKS and gets the attribute number νd,t. Then,
+CSP decrypts T d,t
+3,νd,t and sends the direction to PK. If sd,t = −1,
+PK needs to change the direction. After getting the true split
+direction of the node, PK moves to the next node by it. PK
+and CSP will repeat the above steps until reaching the leaf node.
+Because of the characteristic of parallel trees, PK makes at most
+D times of communications with CSP to reach the leaf nodes of
+each tree.
+3) Service Response: When reaching the leaf nodes of each
+tree, PK calculates  w from these leaf nodes. Then, PK
+calculates the prediction by (5). Utilizing the prediction, PK
+can provide a personal and accurate service for the user.
+Correctness of model inference: We show the correctness
+of the model inference process by proving that the direction
+obfuscation process can provide secure and accuracy inference
+for users.
+Theorem 3: Direction obfuscation can provide secure and
+accuracy inference for users.
+Proof: It can be proved that direction obfuscation provides
+secure and accuracy inference for users as follows:
+Dec(T d,t
+3,νd,t) = Dec((([[τ d,t]] · [[−uνd,t]])
+nd,t
+1,νd,t · [[nd,t
+2,νd,t]])sd,t)
+= Dec([[sd,t(nd,t
+1,νd,t(τ d,t −ud,t
+νd,t) + nd,t
+2,νd,t)]])
+= sd,t(nd,t
+1,νd,t(τ d,t −ud,t
+νd,t) + nd,t
+2,νd,t)
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+886
+IEEE TRANSACTIONS ON SERVICES COMPUTING, VOL. 17, NO. 3, MAY/JUNE 2024
+Therefore, sd,t(nd,t
+1,νd,t(τ d,t −ud,t
+νd,t) + nd,t
+2,νd,t) > n/2 repre-
+sents right and sd,t(nd,t
+1,νd,t(τ d,t −ud,t
+νd,t) + nd,t
+2,νd,t) < n/2 rep-
+resents left. CSP sends the split direction to PK. When sd,t is
+−1, PK needs to reverse the direction. Otherwise, the direction
+is remained, which represents how to split to get the weight.
+VII. SECURITY ANALYSIS
+In this section, we analyze the security of the proposed
+scheme. Since ELXGB contains three phases, we sequentially
+analyze and prove their security through the simulation-based
+real/ideal worlds model. The real world model works as our
+ELXGB scheme, and the ideal world is simulated based on our
+scheme. If the views of adversaries in real and ideal worlds are
+indistinguishable, our scheme is secure. Speciﬁcally, the real
+and ideal worlds can be deﬁned as follows.
+Real World: In the real world, ELXGB contains three phases,
+including data alignment, model training, and inference service
+as follows.
+r Phase 1 Data Alignment: {Pk}K
+1
+hash their IDs using
+Hssk(·) and get Hk. Then, {Pk}K
+1 send Hk to CSP. After
+matching the aligned data, CSP sends a set of hash values
+{valj ∈Hi|L[j] = 1} to {Pk}K
+1 .
+r Phase 2.1 Model Training during the First Tree: To ﬁnd the
+best split of the ﬁrst tree, PK sends the encrypted gradients
+[[g1
+i:1≤i≤N]] and [[h1
+i:1≤i≤N]] to {Pk}K−1
+1
+. To securely build
+the node, PI constructs the encrypted threshold vector
+Td,1
+0
+by attribute obfuscation and sends the encrypted node
+{Im,j,d,1
+L
+, Td,1
+0 } to PK.
+r Phase 2.2 Model Training during the Other Trees: To ﬁnd
+the best split of the other trees, PK sends the noise gra-
+dients ˜gt, ˜ht to {Pk}K−1
+1
+. To securely build the node, PI
+constructs the encrypted threshold vector T d,t
+0
+by attribute
+obfuscation and sends the encrypted node {Im,j,d,t
+L
+, T d,t
+0
+}
+to PK.
+r Phase 3 Inference Service: To get a personal service, the
+user sends the encrypted vector T1 to PK. On receiving
+T1, PK calculates {T d,t
+3,i }M
+i=1 and sends T d,t
+3
+to CSP. CSP
+decrypts T d,t
+3,νd,t and sends the direction to PK.
+Ideal World: In the ideal world, there exist some PPT ad-
+versaries and simulators in each phase. The simulators need to
+simulate the real world for adversaries as follows.
+r Phase1DataAlignment:TheS1 choosessomerandomand
+ﬁxed-length string {Hk}sim. Then, S1 sends {Hk}sim to
+A1. After matching the aligned data, S2 sends a random
+set {{L|L[i] = 1/0}}sim to A2.
+r Phase 2.1 Model Training during the First Tree:
+First, S1 chooses random gradients, encrypts, and gets
+[[{g1
+i:1≤i≤N}sim]] and [[{h1
+i:1≤i≤N}sim]] to A1. Then, S2
+constructs the encrypted random threshold vector and bit
+vector {Td,1
+0 }sim, {Im,j,d,1
+L
+}sim, and sends them to A2.
+r Phase 2.2 Model Training during the Other Trees: First, S1
+sends the random gradients {˜gt}sim, {˜ht}sim to A1. Then,
+S2 constructs the encrypted random threshold vector and
+bit vector {T d,t
+0
+}sim, {Im,j,d,t
+L
+}sim, and sends them to A2.
+r Phase 3 Inference Service: S1 sends the encrypted random
+vector {T1}sim to A1. Then, S2 encrypts a random vector
+{T d,t
+3
+}sim and sends it to A2.
+Deﬁnition 3: Security of Data Alignment. Data alignment is
+selectively secure iff for any two PPT adversaries A1 and A2,
+there exist two simulators S1 and S2 to simulate an ideal world,
+where A1 and A2 just distinguish the real and ideal worlds with
+a negligible probability.
+Theorem 4: Data alignment is secure where CSP cannot get
+data order and private ID of participants and {Pk}K
+1 can not
+obtain any useful information except the aligned data during the
+data alignment.
+During data alignment, IDs are hashed by Hssk(·), shufﬂed,
+and sent to CSP. Owning to shufﬂed indexes and the security of
+ssk, they are random, meaning that A1 cannot distinguish Hk
+and {Hk}sim. Moreover, because {valj ∈Hi|L[j] = 1} and
+{{L|L[i] = 1/0}}sim are both random, A2 cannot distinguish
+the set from the real or ideal worlds. Therefore, the data align-
+ment is secure.
+Deﬁnition 4: Security of Model Training on the First Tree.
+Modeltrainingontheﬁrsttreeisselectivelysecureiffforanytwo
+PPT adversaries A1 and A2, there exist two simulators S1 and
+S2 to simulate an ideal world, where A1 and A2 just distinguish
+the real and ideal worlds with a negligible probability.
+Theorem 5: Model training on the ﬁrst tree is secure where
+{Pk}K−1
+1
+cannot obtain any gradient or weight information, and
+PK cannot obtain any node information.
+As we know,PK owns the private key of gradient information
+encryption, and CSP owns the private key of node informa-
+tion encryption. When training the ﬁrst tree, the gradients are
+encrypted and sent to {Pk}K−1
+1
+. Because Paillier is the IND-
+CPA [31], A1 cannot distinguish the gradients from the real
+or ideal worlds (resp. weight information). Therefore, {Pk}K−1
+1
+cannot obtain any gradient or weight information. Moreover, the
+threshold information is encrypted by the attribute obfuscation
+and sent to PK, meaning PK cannot distinguish the threshold
+from the real or ideal worlds. All node attributes from {Pk}K−1
+1
+are hidden, and the bit information is limited by the node
+numbers, meaning that A2 does not know which attribute is
+related to I. Therefore, PK cannot obtain any node information.
+So, the model training on the ﬁrst tree is secure.
+Deﬁnition 5: Security of Model Training on the Other Trees.
+Model training on the other trees is selectively secure iff for any
+two PPT adversaries A1 and A2, there exist two simulators S1
+and S2 to simulate an ideal world, where A1 and A2 just distin-
+guish the real and ideal worlds with a negligible probability.
+Theorem 6: Model training on the other trees is secure where
+{Pk}K−1
+1
+cannot obtain any gradient or weight information, and
+PK cannot obtain any node information.
+We analyze two different learning tasks that involve binary
+classiﬁcation and regression tasks. It is clear that the noise
+gradients ˜gt
+i (gt
+i = ˆyt
+i −yt
+i) make {Pk}K−1
+1
+confused about data
+labels on regression task. However, it may be easy to guess data
+labels because there are only two results (0 or 1) on a binary
+classiﬁcation task. When the gradient gi > 0 or < 0, we can
+think the true label yi is 0 or 1, respectively. Therefore, it is
+insecure that PK transfers the primitive gradients to the passive
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+XU et al.: ELXGB: AN EFFICIENT AND PRIVACY-PRESERVING XGBOOST FOR VERTICAL FEDERATED LEARNING
+887
+parties. In our scheme, PK selects the secure parameters (ϵ, δ)
+and adds noise to gradients to meet the following condition:
+Pr(gt
+i > 0 & yt
+i = 0) + Pr(gt
+i < 0 & yt
+i = 1) ≈50%.
+(7)
+When the probability is close to 50%, A1 cannot distinguish
+which label (1/0) corresponds to the noise gradient. Therefore,
+{Pk}K−1
+1
+cannot obtain any gradient information (resp. weight).
+The security of node information has been proven in Theorem 5.
+So, model training on the other trees is secure.
+Deﬁnition 6: Security of Model Inference. Model inference
+is selectively secure iff for any two PPT adversaries A1 and A2,
+there exist two simulators S1 and S2 to simulate an ideal world,
+where A1 and A2 just distinguish the real and ideal worlds with
+a negligible probability.
+Theorem 7: Model inference is secure where CSP and PK
+cannot obtain the attribute information of users and split thresh-
+old of {Pk}K−1
+1
+.
+During the inference, all information is encrypted by the pri-
+vate key of CSP. During the inference, the information of users is
+encrypted and sent to PK. Because Paillier is the IND-CPA [31],
+A1 cannot distinguish the user information from the real or ideal
+worlds.
+When comparing one node, PK selects two small random
+numbers nd,t
+1,νd,t, nd,t
+2,νd,t and a random sign sd,t to protect the
+difference between τ d,t and ud,t
+νd,t. It means that CSP just gets
+messages sd,t(nd,t
+1,νd,t(τ d,t −ud,t
+νd,t) + nd,t
+2,νd,t) obtained through
+the decryption and regards them as the judgment of directions,
+in which it cannot get any useful information from {Pk}K−1
+1
+,
+users, or the global model. By the algorithms for the approximate
+common divisor problem [32], CSP can solve the following
+problemxi = p · qi + ri andgetp.Toprotecttheuser’sinforma-
+tion ui:1≤i≤M,i̸=νd,t, the passive parties generate some random
+numbers rd,t
+i , which makes CSP only get sd,t
+i (nd,t
+1,i(rd,t
+i
+−ui) +
+nd,t
+2,i), where i represents the same attribute. It can guarantee
+that the p of the above problem is different for each calculation.
+Therefore, A2 cannot distinguish T d,t
+3
+from the real or ideal
+worlds.
+So, the model inference is secure. CSP and PK cannot obtain
+attribute information of users and split threshold of {Pk}K−1
+1
+.
+It means that the global model is protected.
+VIII. PERFORMANCE EVALUATION
+In this section, we evaluate the performance of our scheme
+over two real-world datasets and compare it with some repre-
+sentative schemes, including SecureBoost [6] and PIVODL [7],
+from the aspects of model accuracy, computational costs, and
+communication overheads.
+A. Experimental Setting
+We implement the training and prediction processes of
+ELXGB with Java 12.0.1. The experiments were conducted
+on ThinkPad-P53 machine equipped with 23.1 GB RAM and
+Intel Core i5-9400H 2.50 GHz processor, running on ubuntu
+18.04.6. Moreover, the used hyperparameters of the ELXGB
+model are presented in Table II. Two representive datasets are
+TABLE II
+HYPERPARAMETERS OF ELXGB MODEL
+used to evaluate the performance of ELXGB. The training and
+test datasets occupy 80% and 20% of the entire data samples,
+respectively.
+Credit Card [33]: The dataset contains 23 features and 30000
+samples,whichisaclassiﬁcationtasktopredictwhetheraperson
+will make a payment on time.
+Bank Marketing [34]: The dataset has 17 features and 45211
+instances, which records direct marketing campaigns of a Por-
+tuguese banking institution. The classiﬁcation task can predict
+whether clients will subscribe for time deposit.
+In our performance evaluations, all experiments show average
+results and each repeated ﬁve times independently.
+B. Model Accuracy
+In this subsection, we compare the inﬂuence on model per-
+formances as the maximum tree numbers, the maximum tree
+depths, and privacy parameters change from Fig. 4. First, we
+can see that the average accuracy by the global proposal is about
+83% and 90% for Credit card and Bank marketing datasets,
+respectively. Second, compared with the primitive XGBoost,
+we ﬁnd that ELXGB almost achieves the same accuracy. Since
+we handle the weight of leaf nodes by restoring the true gradient
+on PK, it can reduce the impact of noise on the model accuracy.
+Moreover, it is normal that the model accuracy has a slight
+ﬂuctuation because of the global proposal to build the model.
+Third, we can ﬁnd that, as ϵ increases, the variation in the
+accuracy of our model is slight. Therefore, we can choose the
+more secure parameters to train an accurate model.
+C. Computational Costs
+In this subsection, we analyze the running time on data align-
+ment and compare it with recent scheme [35]. Then, we show
+the time cost during training and service, analyze the inﬂuence
+of the tree number and the tree depth on the model and compare
+our scheme with XGBoost, SecureBoost and PIVODL.
+1) Data Alignment: We choose SHA512 as the hash algorithm
+and ﬁnish our experiments with different intersection sizes over
+different participants. From Table III, with the increase of train-
+ing data, the time cost grows faster. However, in general, the
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+888
+IEEE TRANSACTIONS ON SERVICES COMPUTING, VOL. 17, NO. 3, MAY/JUNE 2024
+Fig. 4.
+Accuracy over different aspects on different datasets. (a). Accuracy with different T; (b). Accuracy with different D; (c). Accuracy with different ϵ.
+TABLE III
+RUN-TIME WITH DIFFERENT NUMBERS OF PARTICIPANTS
+cost of our algorithm is small. Compared with Circuit/Quorum
+scheme [35], where the statistical security parameter is 40 and
+the computational security parameter is 128, when the number
+of participants is 4 and the average total data is 216, its time costs
+about 2910 ms and our time just costs about 103 ms. Therefore,
+the secure data alignment can meet our security needs to ﬁnish
+data alignment efﬁciently.
+2) Model Training: In order to obtain a better contrast effect,
+we compare the training time of our scheme with that of XG-
+Boost, SecureBoost, and PIVODL. The length of Paillier key
+in all secure schemes is 512. From Fig. 5(a)–(b), we can know
+that the training time cost in our scheme grows slowly with the
+tree numbers increasing. Unlike other schemes, our scheme just
+uses the encryption cryptosystem in the ﬁrst tree. Therefore, our
+cost concentrates on the ﬁrst tree, and we reduce overhead in
+later training. By contrast, the training time in other schemes
+grows linearly with the maximum tree number increasing. From
+Fig. 5(c)–(d), we can ﬁnd that the time overhead increases faster
+as the maximum tree depth grows than as the maximum tree
+number grows. Moreover, with the maximum tree depth increas-
+ing, the training time of our scheme grows slower than that of
+other schemes. We can ﬁnd that the time has increased alarm-
+ingly when utilizing the encryption cryptosystem in XGBoost.
+For example, When the tree number is 5 and the tree depth is 3 on
+Credit Card, the running time in primitive XGBoost costs about
+1 s. However, PIVODL costs about 480 s, and SecureBoost costs
+about 209 s. With the tree structure changing, their computation
+cost has drastic changes. However, the expensive encryption
+overhead as (5) can be ﬁnished ofﬂine in our scheme. Therefore,
+our scheme can efﬁciently train the global model independently
+of the model structure.
+Fig. 5.
+Training time over different aspects on different datasets. (a)-(b). The
+training time with different T; (c)-(d). The training time with different D.
+3) Secure Inference: On different datasets, we all choose 1000
+samples to test the secure service process, and the size of service
+key is 512. From Fig. 6(a)–(b), we can know that the time
+of secure service increases slower with maximum tree number
+growing than with maximum tree depth growing. Because of the
+characteristics of parallel tree, we can simultaneously predict the
+weight. Therefore, as the maximum tree number increases, the
+time cost grows slower. It is clear that the cost of service has a
+strong relationship to the model structure. Moreover, we can ﬁnd
+that the service time cost on different datasets is also different.
+The time cost on Credit Card is higher than on Bank Marketing
+because the former has more dimensions than the latter.
+D. Communication Cost
+In this subsection, we evaluate the total communication over-
+head of the training process affected by the maximum tree
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+XU et al.: ELXGB: AN EFFICIENT AND PRIVACY-PRESERVING XGBOOST FOR VERTICAL FEDERATED LEARNING
+889
+Fig.6.
+Servicetimeoverdifferentaspectsondifferentdatasets.(a).Theservice
+time with different T; (b). The service time with different D.
+Fig. 7.
+Communication cost over different aspects on different datasets. (a)-
+(b). The communication cost with different T; (c)-(d). The communication cost
+with different D.
+number and maximum depth. The participants are 4, including
+an active party and three passive parties.
+From Fig. 7(a)–(b), we can ﬁnd that as the maximum tree
+number increases, the overhead in our scheme keeps stable,
+and PIVODL’s and SecureBoost’s overhead grows faster. From
+Fig. 7(c)–(d), we can know our scheme and SecureBoost are
+hardly unaffected by the increase of tree depth. However, Se-
+cureBoost’s communication cost is about ﬁve times ours, and
+the communication overhead in PIVODL grows faster as the
+maximum depth changes. We can also ﬁnd that our scheme’s
+communication cost is more higher on Credit Card than Bank
+Marketing because the former has more training data than the
+latter. Therefore, the communication cost of our scheme is
+affected by the number of training data.
+In our scheme, most overhead is concentrated on the ﬁrst tree
+built. The encrypted value of gradient and hessian by HE will
+be transmitted to all passive parties. However, the tree structure
+does not affect the communication overhead. Therefore, when
+the tree structure is richer, our scheme has more advantages than
+other schemes.
+IX. RELATED WORK
+Based on the distribution characteristics of the data, fed-
+erated learning can be classiﬁed into horizontal FL, vertical
+FL, and federated transfer learning [3]. In vertical FL, partic-
+ipants’ data sets share the same sample ID space but differ
+in attribute space. According to the data distribution, privacy-
+preserving machine learning algorithms have been proposed,
+which solve regression, classiﬁcation, and more. For example,
+Hardy et al. [36] proposed a vertical federated learning scheme
+to train a privacy-preserving logistic regression model, which
+applies Taylor approximation to the loss and gradient functions,
+and homomorphic encryption is adopted for privacy-preserving
+computations. Wang et al. [28] proposed a privacy-preserving
+vertical FL for native Bayesian classiﬁcation. Based on Paillier
+cryptosystem and random masking techniques, they aggregate
+an efﬁcient and privacy-preservation prediction model over
+vertically distributed data. Zhao et al. [37] proposed a data
+aggregationmatrixconstructionalgorithm,whichaggregatesthe
+vertically partitioned data for logistic regression training. The
+model can be securely trained without multi-round interactions
+between the third party and participants. Wu et al. [38] proposed
+a privacy-preserving solution based on HE and MPC for vertical
+tree-based models, which guarantees that no intermediate infor-
+mation is disclosed during the execution. Tian et al. [39] propose
+a framework named FederBoost to support running GBDT over
+vertical and horizontal data. Based on ϵ-LDP, it can securely
+publish bucket information to complete gradient aggregation
+for the vertical data. Zheng et al. [40] propose the ﬁrst system
+framework named Privet to support training and predicting for
+the gradient boosted decision tables on vertical data. Based on
+lightweight cryptography, it can well protect data information
+dispersed among various participants.
+In our work, we propose an efﬁcient and privacy-preserving
+vertical FL for XGBoost training on the premise of meeting
+security requirements, which are mentioned in Section II. We
+discuss and compare existing works with it, which can be mainly
+classiﬁed into HE-based schemes and MPC-based schemes,
+according to privacy-preservation techniques. Table IV summa-
+rizes the major related works in terms of privacy preservation
+and performance adopted.
+HE-based schemes: Cheng et al. [6] proposed a lossless
+federated learning framework called SecureBoost, which sums
+gradients by Paillier on the passive parties and decrypts them on
+the active party. They maintain high model accuracy. However,
+massive communication and calculation costs are unbearable
+during each training epoch. Moreover, weight sent to the corre-
+sponding passive party leaks data labels. Zhu et al. [7] proposed
+a novel vertical federated learning scene where data labels are
+distributed among multiple clients. Therefore, the scheme can
+be treated as the variant of horizontal federal learning scheme.
+They locally calculate the partial sum of gradients, encrypt
+them by HE, and send them to the aggregation server for the
+whole sum. To protect data labels, they add noise to weight
+by DP. However, data labels might be recovered by model
+inversion attacks [10], [19]. Moreover, with the increase of
+training epochs, their training scheme will spend unavoidable
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+890
+IEEE TRANSACTIONS ON SERVICES COMPUTING, VOL. 17, NO. 3, MAY/JUNE 2024
+TABLE IV
+COMPARISONS OF SECURITY AND PERFORMANCE IN VERTICAL FEDERATED XGBOOST SCHEMES
+communication overhead. Chen et al. [8] proposed Secure-
+Boost+ that is both novel and improved from the prior work
+SecureBoost. Compared with SecureBoost, SecureBoost+ uti-
+lizes data packing to decrease the encryption overhead of the
+active side by half. Moreover, by the ciphertext compressing,
+SecureBoost+ further reduces the communication overhead be-
+tween the passive parties and the active party and reduces the
+decryption times for the active party. The optimized approaches
+can be used in the HENS to further improve the efﬁciency of
+ELXGB.
+MPC-based schemes: Le et al. [11] proposed a privacy-
+preserving XGBoost scheme called FedXGBoost-SSM for fed-
+erated learning. FedXGBoost-SSM utilizes characteristics of
+the matrix to protect data labels and data distributions, while
+existing some risk of leakage to data distributions. Moreover,
+they also give another approach called FedXGBoost-LDP to
+trainthemodel,whichhasmoreefﬁciencyfortraining.However,
+it is just suitable for regression tasks, and model accuracy
+decreases. Fang et al. [12] proposed to build large-scale secure
+XGBoost by leveraging hybrid secure multi-party computa-
+tion techniques. They provide two approaches to improve the
+model performance: HEP-XGB and CRP-XGB, respectively.
+Both approaches can protect data labels and data distributions
+well. However, their efﬁciency is unacceptable, and the model
+accuracy declines due to the reconstruction of the sigmoid
+function. Xie et al. [13] proposed a secret sharing scheme with
+lower overhead. Their framework can provide secure training
+and prediction to protect data labels and data order well. How-
+ever, these processes need all participants to keep continuously
+online, which is vital to ﬁnish the accurate inference. Zhao et
+al. [16] proposed an efﬁcient and privacy-preserving vertical
+federated boosting tree framework based on secure two-party
+computation. The passive parties divide the bucket into two parts
+through secret sharing, which are respectively sent to the active
+party and CSP. Therefore, the training and inference processes
+can be ﬁnished ﬂexibly between the two sides. The SHE [41] as
+the vital technique of the scheme has more efﬁcient performance
+compared with other HE schemes. However, the newest research
+states that SHE can be attacked by the approximate common
+divisor problem [32], meaning the scheme might leak sensitive
+information. Moreover, the global model is leaked to CSP, which
+increases the risk of sensitive data leakage [32], [19]. In addition,
+TABLE V
+GUESS POSSIBILITY OVER DIFFERENT TREES WITH DIFFERENT ϵ
+the inference process needs to traverse every node of the tree
+model, which generates huge overhead.
+X. DISCUSSION
+In this section, we discuss here security and optimization
+extensions that can be integrated to ELXGB.
+1) Why is HENS utilized to construct the ﬁrst tree and DPNS
+utilized to construct the other trees? In XGBoost, we ﬁnd that
+its model weight is concentrated on the ﬁrst tree. It means that
+the weight might leak some extra information, such as data
+labels [6]. Therefore, it deserves higher security guarantees to
+protect weight. Moreover, we further prove our theorem by
+experiments as Table V. When utilizing DPNS to construct the
+model, the curious passive parties might utilize model inversion
+attacks to guess the true labels. For example, after receiving
+the noise gradients, they can calculate the probability of (7). If
+they own some true training labels, they can successfully verify
+the possibility of these guesses. And it is insecure when the
+possibility is very high or very low, e.g., if one adversary knows
+the possibility is 20%, it will have 80% possibility to guess the
+true labels on the contrary. In Table V, we can ﬁnd the guessing
+possibility on the ﬁrst tree is higher than on other trees, and it
+means the data labels might be leaked. Therefore, considering
+the balance between privacy and performance, we choose HENS
+to construct the ﬁrst tree and choose DPNS to construct the other
+trees.
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+XU et al.: ELXGB: AN EFFICIENT AND PRIVACY-PRESERVING XGBOOST FOR VERTICAL FEDERATED LEARNING
+891
+2)CanHENSbefurtheroptimized?Inourscheme,wegivethe
+optimal conﬁguration, where we choose HENS to construct the
+ﬁrst tree and choose DPNS to construct the other trees. It is clear
+that the expensive overhead is concentrated on the ﬁrst tree. For
+PK, it needs to encrypt 2 · N data for {g1
+i }N
+i=1 and {h1
+i }N
+i=1. For
+the i-th passive party, it needs to encrypt 2 ·
+1
+eps · Mi · 2D−1 ag-
+gregated gradients, where 2D−1 represents the node numbers. To
+decrease the encryption times, we can use the data-packing and
+ciphertext compressing to optimize Paillier as SecureBoost+ [8].
+It can decrease the encryption overhead of the active side by half
+and the encryption overhead of the passive party by η, where η
+represents the compression times. When the data number N
+is large, the total encryption times can be approximated as N.
+Therefore, to further decrease it, CKKS [42] is proposed as the
+encryption scheme, which supports data-packing and is more
+lightweight. By CKKS, the encryption times can be reduced
+to several times to publish gradients. Therefore, HENS can be
+further optimized by data-packing.
+XI. CONCLUSION
+In this paper, we propose an efﬁcient and privacy-preserving
+vertical federated boosting tree framework named ELXGB,
+which can achieve high-accuracy training and inference securely
+and efﬁciently. We have carefully designed the processes of
+training and inference, which can resist model inversion at-
+tacks and property inference attacks. Experimental results also
+demonstrate that ELXGB can train a high-quality model under
+the premise of ensuring security and efﬁciency. In the future,
+we plan to train the model by a trust executed environment [43]
+to further improve the performance and security of federated
+XGBoost model training.
+REFERENCES
+[1] European Parliament and Council of the European Union, General Data
+Protection Regulation, Apr. 2016. [Online]. Available: https://eur-lex.
+europa.eu/eli/reg/2016/679/oj/
+[2] B. McMahan, E. Moore, D. Ramage, S. Hampson, and B. A. y Arcas,
+“Communication-efﬁcient learning of deep networks from decentralized
+data,” in Proc. Int. Conf. Artif. Intell. Statist., PMLR, 2017, pp. 1273–1282.
+[3] Q. Yang, Y. Liu, T. Chen, and Y. Tong, “Federated machine learning:
+Concept and applications,” ACM Trans. Intell. Syst. Technol., vol. 10, no. 2,
+pp. 12:1–12:19, 2019.
+[4] T. Chen and C. Guestrin, “XGBoost: A scalable tree boosting system,”
+in Proc. ACM SIGKDD Int. Conf. Knowl. Discov. Data Mining, 2016,
+pp. 785–794.
+[5] T. Li, A. K. Sahu, A. Talwalkar, and V. Smith, “Federated learning:
+Challenges, methods, and future directions,” IEEE Signal Process. Mag.,
+vol. 37, no. 3, pp. 50–60, May 2020.
+[6] K. Cheng et al., “SecureBoost: A lossless federated learning framework,”
+IEEE Intell. Syst.., vol. 36, no. 6, pp. 87–98, Nov./Dec. 2021.
+[7] H. Zhu, R. Wang, Y. Jin, and K. Liang, “PIVODL: Privacy-preserving ver-
+tical federated learning over distributed labels,” 2021, arXiv:2108.11444.
+[8] W. Chen, G. Ma, T. Fan, Y. Kang, Q. Xu, and Q. Yang, “SecureBoost : A
+high performance gradient boosting tree framework for large scale vertical
+federated learning,” 2021, arXiv:2110.10927.
+[9] P. Paillier, “Public-key cryptosystems based on composite degree residu-
+osity classes,” in Proc. Int. Conf. Theory Appl. Cryptogr. Techn., Springer,
+1999, pp. 223–238.
+[10] M. Fredrikson, E. Lantz, S. Jha, S. M. Lin, D. Page, and T. Ristenpart,
+“Privacy in pharmacogenetics: An end-to-end case study of personalized
+warfarin dosing,” in Proc. USENIX Secur. Symp., USENIX Association,
+2014, pp. 17–32.
+[11] N. K. Le et al., “FedXGBoost: Privacy-preserving xgboost for federated
+learning,” 2021, arXiv:2106.10662.
+[12] W. Fang et al., “Large-scale secure XGB for vertical federated learning,”
+in Proc. ACM Int. Conf. Inf. Knowl. Manage., 2021, pp. 443–452.
+[13] L.Xie,J.Liu,S.Lu,T.Chang,andQ.Shi,“Anefﬁcientlearningframework
+for federated XGBoost using secret sharing and distributed optimization,”
+ACM Trans. Intell. Syst. Technol., vol. 13, no. 5, pp. 77:1–77:28, 2022.
+[14] P. Mohassel and P. Rindal, “Aby3: A mixed protocol framework for
+machine learning,” in Proc. ACM SIGSAC Conf. Comput. Commun. Secur.,
+2018, pp. 35–52.
+[15] R. Cramer, I. Damgård, and J. B. Nielsen, Secure Multiparty Computation
+and Secret Sharing. Cambridge, U.K.: Cambridge Univ. Press, 2015.
+[16] J. Zhao, H. Zhu, W. Xu, F. Wang, R. Lu, and H. Li, “SGBoost: An efﬁcient
+and privacy-preserving vertical federated tree boosting framework,” IEEE
+Trans. Inf. Forensics Security, vol. 18, pp. 1022–1036, 2023.
+[17] A. Beimel, “Secret-sharing schemes: A survey,” in Proc. 3rd Int. Workshop
+Coding Cryptol., Springer, 2011, pp. 11–46.
+[18] D.Boneh,A.Sahai,andB.Waters,“Functionalencryption:Deﬁnitionsand
+challenges,” in Proc. 8th Theory Cryptogr. Conf., Springer, 2011, pp. 253–
+273.
+[19] M. Song et al., “Analyzing user-level privacy attack against federated
+learning,” IEEE J. Sel. Areas Commun.., vol. 38, no. 10, pp. 2430–2444,
+Oct. 2020.
+[20] M. Abadi et al., “Deep learning with differential privacy,” in Proc. ACM
+SIGSAC Conf. Comput. Commun. Secur., 2016, pp. 308–318.
+[21] N. Wang et al., “Collecting and analyzing multidimensional data with local
+differential privacy,” in Proc. IEEE Int. Conf. Data Eng., 2019, pp. 638–
+649.
+[22] L. Lyu, H. Yu, and Q. Yang, “Threats to federated learning: A survey,”
+2020, arXiv: 2003.02133.
+[23] O. Goldreich, S. Micali, and A. Wigderson, “How to play ANY mental
+game, or a completeness theorem for protocols with honest majority,” in
+Providing Sound Foundations for Cryptography. New York, NY, USA:
+ACM, 2019, pp. 307–328.
+[24] M. Fang, X. Cao, J. Jia, and N. Z. Gong, “Local model poisoning attacks
+to byzantine-robust federated learning,” in Proc. USENIX Secur. Symp.,
+USENIX Association, 2020, pp. 1605–1622.
+[25] Z. Zhang et al., “Neurotoxin: Durable backdoors in federated learning,” in
+Proc. Int. Conf. Mach. Learn., PMLR, 2022, pp. 26429–26446.
+[26] L. Breiman, J. H. Friedman, R. A. Olshen, and C. J. Stone, Classiﬁcation
+and Regression Trees. Belmont, CA, USA: Wadsworth, 1984.
+[27] F. Wang, H. Zhu, R. Lu, Y. Zheng, and H. Li, “Achieve efﬁcient and
+privacy-preserving disease risk assessment over multi-outsourced vertical
+datasets,” ACM Trans. Intell. Syst. Technol., vol. 19, no. 3, pp. 1492–1504,
+2022.
+[28] F. Wang, H. Zhu, R. Lu, Y. Zheng, and H. Li, “A privacy-preserving
+and non-interactive federated learning scheme for regression training with
+gradient descent,” Inf. Sci., vol. 552, pp. 183–200, 2021.
+[29] C. Dwork, K. Kenthapadi, F. McSherry, I. Mironov, and M. Naor, “Our
+data, ourselves: Privacy via distributed noise generation,” in Proc. 25th
+Int. Conf. Theory Appl. Cryptogr. Techn., Springer, 2006, pp. 486–503.
+[30] C. Dwork, F. McSherry, K. Nissim, and A. D. Smith, “Calibrating noise
+to sensitivity in private data analysis,” J. Privacy Conﬁdentiality., vol. 7,
+no. 3, pp. 17–51, 2016.
+[31] P. Paillier and D. Pointcheval, “Efﬁcient public-key cryptosystems prov-
+ably secure against active adversaries,” in Proc. Int. Conf. Theory Appl.
+Cryptol. Inf. Secur., Springer, 1999, pp. 165–179.
+[32] S. D. Galbraith, S. W. Gebregiyorgis, and S. Murphy, “Algorithms for the
+approximate common divisor problem,” LMS J. Comput. Math.., vol. 19,
+pp. 58–72, 2016.
+[33] I. Yeh and C. Lien, “The comparisons of data mining techniques for the
+predictive accuracy of probability of default of credit card clients,” Expert
+Syst. Appl., vol. 36, no. 2, pp. 2473–2480, 2009.
+[34] S. Moro, P. Cortez, and P. Rita, “A data-driven approach to predict the
+success of bank telemarketing,” Decis. Support Syst., vol. 62, pp. 22–31,
+2014.
+[35] N. Chandran, N. Dasgupta, D. Gupta, S. L. B. Obbattu, S. Sekar, and A.
+Shah, “Efﬁcient linear multiparty PSI and extensions to circuit/quorum
+PSI,” in Proc. ACM SIGSAC Conf. Comput. Commun. Secur., 2021,
+pp. 1182–1204.
+[36] S. Hardy et al., “Private federated learning on vertically partitioned data via
+entity resolution and additively homomorphic encryption,” 2017, arXiv:
+1711.10677.
+[37] J. Zhao et al., “ACCEL: An efﬁcient and privacy-preserving federated
+logistic regression scheme over vertically partitioned data,” Sci. China Inf.
+Sci., vol. 65, no. 7, pp. 1–2, 2022.
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 
+892
+IEEE TRANSACTIONS ON SERVICES COMPUTING, VOL. 17, NO. 3, MAY/JUNE 2024
+[38] Y.Wu, S. Cai, X. Xiao, G.Chen, and B. C.Ooi, “Privacy preserving vertical
+federated learning for tree-based models,” in Proc. VLDB Endowment,
+vol. 13, no. 11, pp. 2090–2103, 2020.
+[39] Z. Tian et al., “FederBoost: Private federated learning for GBDT,”
+IEEE
+Trans.
+Dependable
+Secure
+Comput.,
+to
+be
+published,
+doi: 10.1109/TDSC.2023.3276365.
+[40] Y. Zheng, S. Xu, S. Wang, Y. Gao, and Z. Hua, “Privet: A privacy-
+preserving vertical federated learning service for gradient boosted deci-
+sion tables,” IEEE Trans. Serv. Comput., vol. 16, no. 5, pp. 3604–3620,
+Sep./Oct. 2023.
+[41] H. Mahdikhani, R. Lu, Y. Zheng, J. Shao, and A. A. Ghorbani, “Achiev-
+ing o (log3n) communication-efﬁcient privacy-preserving range query in
+fog-based IoT,” IEEE Internet Things J., vol. 7, no. 6, pp. 5220–5232,
+Jun. 2020.
+[42] J. H. Cheon, A. Kim, M. Kim, and Y. S. Song, “Homomorphic encryption
+for arithmetic of approximate numbers,” in Proc. 23rd Int. Conf. Theory
+Appl. Cryptol. Inf. Secur., Springer, 2017, pp. 409–437.
+[43] A.Lawetal.,“SecurecollaborativetrainingandinferenceforXGBoost,”in
+Proc.WorkshopPrivacy-PreservingMach.Learn.Pract.,2020,pp.21–26.
+Wei Xu received the BEng degree in information se-
+curity from Xidian University, Xi’an, Shaanxi, China,
+in 2022. He is currently working toward the PhD
+degree in cyberspace security with Xidian Univer-
+sity, Xi’an, Shaanxi, China. His research has been
+concerned with privacy preserving machine learning
+and applied cryptography.
+Hui Zhu (Senior Member, IEEE) received the BSc
+degree from Xidian University, Xi’an, Shaanxi,
+China, in 2003, the MSc degree from Wuhan Uni-
+versity, Wuhan, Hubei, China, in 2005, and the PhD
+degree from Xidian University, in 2009. He was a
+researchfellowwiththeSchoolofElectricalandElec-
+tronics Engineering, Nanyang Technological Univer-
+sity, Singapore, in 2013. Since 2016, he has been a
+professor with the School of Cyber Engineering, Xi-
+dian University. His current research interests include
+applied cryptography, data security, and privacy.
+Yandong Zheng (Member, IEEE) received the MS
+degree from the Department of Computer Science,
+Beihang University, China, in 2017, and received
+the PhD degree from the Department of Computer
+Science, University of New Brunswick, Canada, in
+2022. Since 2022, she has been an associate professor
+withtheSchoolofCyberEngineering,XidianUniver-
+sity. Her research interest includes cloud computing
+security and Big Data privacy.
+Fengwei Wang (Member, IEEE) received the BSc
+degree from Xidian University, in 2016 and the PhD
+degree from Xidian University, in 2021. In 2019, he
+was with the Faculty of Computer Science, University
+of New Brunswick as a visiting scholar. Since 2021,
+he has been the lecturer with the School of Cyber
+Engineering, Xidian University, Xi’an, China. His
+research interests include the areas of applied cryp-
+tography, cyber security, and privacy.
+Jiaqi Zhao received the BEng degree in informa-
+tion security from Xidian University, Xi’an, Shaanxi,
+China, in 2020, where he is currently working toward
+the PhD degree in cyberspace security. His research
+has been concerned with privacy-preserving machine
+learning.
+Zhe Liu (Senior Member, IEEE) received the BS
+and MS degrees from Shandong University, in 2008
+and 2011, respectively, and the PhD degree from the
+University of Luxembourg, in 2015. He is currently a
+professor with the College of Computer Science and
+Technology, Nanjing University of Aeronautics and
+Astronautics, China. His research interests include
+security, privacy, and cryptography solutions for the
+Internet of Things. He was a recipient of the presti-
+gious FNR AwardsOutstanding PhD Thesis Award, in
+2016, the ACM CHINA SIGSAC Rising Star Award,
+in 2017, and the DAMO Academy Young Fellow, in 2019. He has served as the
+general co-chair for CHES 2020 and CHES 2021.
+Hui Li (Member, IEEE) received the BSc degree
+from Fudan University, in 1990 and the MSc and
+PhD degrees from Xidian University, China, in 1993
+and 1998, respectively. Since 2005, he has been a
+professor with the School of Telecommunication En-
+gineering, Xidian University. His research interests
+are in the areas of cryptography, wireless network
+security, information theory, and network coding. He
+has served as the TPC co-chair for ISPEC 2009 and
+IAS 2009; the general co-chair for E-Forensic 2010,
+ProvSec 2011, and ISC 2011; and the honorary chair
+for NSS 2014 and ASIACCS 2016.
+Authorized licensed use limited to: Seoul National Univ of Science & Tech (SNUT). Downloaded on March 25,2026 at 05:40:11 UTC from IEEE Xplore.  Restrictions apply. 

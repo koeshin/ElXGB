@@ -1,0 +1,402 @@
+[
+    {
+        "depth": 0,
+        "split": "x6",
+        "split_condition": 2.0,
+        "gain": 1273.777537244987,
+        "children": [
+            {
+                "depth": 1,
+                "split": "x7",
+                "split_condition": 2.0,
+                "gain": 254.40440909141944,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x20",
+                        "split_condition": 863.0,
+                        "gain": 78.5086144334382,
+                        "children": [
+                            {
+                                "leaf": -1.154366960054164
+                            },
+                            {
+                                "leaf": -1.5466492412691497
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x11",
+                        "split_condition": 2.0,
+                        "gain": 15.548443780015845,
+                        "children": [
+                            {
+                                "leaf": -0.48414539829853054
+                            },
+                            {
+                                "leaf": 0.09633911368015415
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "x8",
+                "split_condition": 0.0,
+                "gain": 19.847663592046473,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 2443.0,
+                        "gain": 7.278860597178971,
+                        "children": [
+                            {
+                                "leaf": -0.6407766990291263
+                            },
+                            {
+                                "leaf": 0.6
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x10",
+                        "split_condition": 2.0,
+                        "gain": 9.99558864837934,
+                        "children": [
+                            {
+                                "leaf": 0.6828528072837633
+                            },
+                            {
+                                "leaf": 1.0586011342155008
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "depth": 0,
+        "split": "x8",
+        "split_condition": 2.0,
+        "gain": 87.33312467994932,
+        "children": [
+            {
+                "depth": 1,
+                "split": "x18",
+                "split_condition": 3000.0,
+                "gain": 60.33307512874745,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 434.625,
+                        "gain": 32.25392875883507,
+                        "children": [
+                            {
+                                "leaf": 0.15291031564926919
+                            },
+                            {
+                                "leaf": -0.2802898899310478
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x10",
+                        "split_condition": 2.0,
+                        "gain": 12.297083100370003,
+                        "children": [
+                            {
+                                "leaf": -0.5974338234533908
+                            },
+                            {
+                                "leaf": 0.24184314589191008
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "x7",
+                "split_condition": 2.0,
+                "gain": 9.856981802322238,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x10",
+                        "split_condition": 2.0,
+                        "gain": 10.946203108331108,
+                        "children": [
+                            {
+                                "leaf": 0.3270052285200133
+                            },
+                            {
+                                "leaf": 1.2318786740657772
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x23",
+                        "split_condition": 4000.0,
+                        "gain": 3.8134533837533873,
+                        "children": [
+                            {
+                                "leaf": 0.17482420145954244
+                            },
+                            {
+                                "leaf": -0.15995824452317578
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "depth": 0,
+        "split": "x1",
+        "split_condition": 150000.0,
+        "gain": 39.17238359922862,
+        "children": [
+            {
+                "depth": 1,
+                "split": "x1",
+                "split_condition": 50000.0,
+                "gain": 12.391531076297731,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 16578.9375,
+                        "gain": 6.104169416545208,
+                        "children": [
+                            {
+                                "leaf": 0.3851836224514291
+                            },
+                            {
+                                "leaf": 0.09530889930131412
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x6",
+                        "split_condition": -1.0,
+                        "gain": 6.231530749642584,
+                        "children": [
+                            {
+                                "leaf": -0.49673218436257177
+                            },
+                            {
+                                "leaf": 0.028465196369917397
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "x6",
+                "split_condition": 1.0,
+                "gain": 23.160355312329962,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 146325.46875,
+                        "gain": 13.910933450330234,
+                        "children": [
+                            {
+                                "leaf": -0.37576732866744555
+                            },
+                            {
+                                "leaf": 0.05068464071081349
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x11",
+                        "split_condition": -1.0,
+                        "gain": 5.54490097567452,
+                        "children": [
+                            {
+                                "leaf": 0.3715499414321444
+                            },
+                            {
+                                "leaf": -0.01405792007668368
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "depth": 0,
+        "split": "x19",
+        "split_condition": 15440.5625,
+        "gain": 14.792515374489792,
+        "children": [
+            {
+                "depth": 1,
+                "split": "x4",
+                "split_condition": 2.0,
+                "gain": 13.411573898144901,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x4",
+                        "split_condition": 1.0,
+                        "gain": 3.473592102146254,
+                        "children": [
+                            {
+                                "leaf": -0.8753474712928956
+                            },
+                            {
+                                "leaf": 0.10930786033452959
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x21",
+                        "split_condition": 7.0,
+                        "gain": 7.043295408603529,
+                        "children": [
+                            {
+                                "leaf": 0.07141204102985431
+                            },
+                            {
+                                "leaf": -0.13435161110433572
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "x12",
+                "split_condition": 2443.0,
+                "gain": 2.3097226642759185,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x3",
+                        "split_condition": 3.0,
+                        "gain": 2.3107514014979613,
+                        "children": [
+                            {
+                                "leaf": -0.24818556346969206
+                            },
+                            {
+                                "leaf": 0.8172888216276458
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 240256.0625,
+                        "gain": 2.0741805220462304,
+                        "children": [
+                            {
+                                "leaf": -0.6038760627000644
+                            },
+                            {
+                                "leaf": -0.09258171582974395
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "depth": 0,
+        "split": "x6",
+        "split_condition": 0.0,
+        "gain": 4.7713921578899,
+        "children": [
+            {
+                "depth": 1,
+                "split": "x21",
+                "split_condition": 2010.40625,
+                "gain": 11.742924334450171,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x10",
+                        "split_condition": -1.0,
+                        "gain": 4.705430007973984,
+                        "children": [
+                            {
+                                "leaf": 0.0409852831950846
+                            },
+                            {
+                                "leaf": 0.30278677310926017
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x13",
+                        "split_condition": 99516.0,
+                        "gain": 5.265551965930108,
+                        "children": [
+                            {
+                                "leaf": -0.2196338805198183
+                            },
+                            {
+                                "leaf": 0.9307546724278843
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "depth": 1,
+                "split": "x6",
+                "split_condition": 2.0,
+                "gain": 6.000876300619701,
+                "children": [
+                    {
+                        "depth": 2,
+                        "split": "x1",
+                        "split_condition": 80000.0,
+                        "gain": 9.570592105098235,
+                        "children": [
+                            {
+                                "leaf": 0.04130739394551123
+                            },
+                            {
+                                "leaf": -0.15925765655832735
+                            }
+                        ]
+                    },
+                    {
+                        "depth": 2,
+                        "split": "x8",
+                        "split_condition": 2.0,
+                        "gain": 11.464302538911138,
+                        "children": [
+                            {
+                                "leaf": 0.3098325425270865
+                            },
+                            {
+                                "leaf": -0.11204196618174679
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
