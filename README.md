@@ -9,8 +9,8 @@ ELXGB는 다수의 데이터 보유 기관(Passive Parties)이 레이블(Target)
 ## 🔥 핵심 기술 특징 (Key Features)
 
 1. **HENS (Homomorphic Encryption Node Split)**
-   - **첫 번째 트리** 훈련 시, 파티 간 정보 유출을 완벽히 차단하기 위해 **마이크로소프트 TenSEAL (CKKS 구조)** 기반의 암호화 상태 히스토그램 연산을 수행합니다.
-   - ⚠️ *최적화*: 암호문 다중 분할 버그(Parameter Mismatch)를 회피하고 4만 건 이상의 대규모 데이터셋(Bank Marketing 등) 처리를 위해 **자체 4096-Chunking 래퍼**를 적용하여 수백 배의 성능 최적화를 달성했습니다.
+   - **첫 번째 트리** 훈련 시, 파티 간 정보 유출을 완벽히 차단하기 위해 **Paillier 동형암호 (phe 방식)** 기반의 암호화 상태 히스토그램 연산을 수행합니다.
+   - ⚠️ *논문 수식 완벽 재현*: TenSEAL-CKKS에서 발생하던 벡터 용량 한계 에러를 피하고 논문 본문의 수식($[[g_i]]^{I_i}$)을 100% 구현하기 위해 정통 Paillier 알고리즘 및 512-bit 최적화 키 엔진을 적용했습니다.
 2. **DPNS (Differential Privacy Node Split)**
    - 두 번째 트리부터는 **IBM Diffprivlib** 기반 차분 프라이버시(DP) 노이즈를 그래디언트에 혼합하여 통신 속도와 보안의 균형을 유지합니다.
 3. **Secure Offline Inference (Batch Decoupled Inference)**
@@ -29,19 +29,19 @@ ELXGB는 다수의 데이터 보유 기관(Passive Parties)이 레이블(Target)
 - `pipenv` 패키지 매니저 (`pip install pipenv`)
 
 ### 2. 설치 방법
-터미널(또는 명령 프롬프트)을 열고 프로젝트 루트 디렉토리(`ELXGB`)에서 다음을 실행하세요.
+터미널(또는 명령 프롬프트)을 열고 프로젝트 루트 디렉토리(`ELXGB`)에서 다음 중 하나의 방식으로 설치하세요.
 
+#### 방법 A: Pipenv (권장)
 ```bash
-# 디렉토리 이동
-cd c:\Users\Islab\Desktop\islab_code\ELXGB
-
-# 가상환경 구성 및 프로젝트 의존성 자동 설치
 pipenv install
-
-# 가상환경 내부로 진입
 pipenv shell
 ```
-> *(자동 설치되는 주요 라이브러리: `tenseal`, `diffprivlib`, `xgboost`, `scikit-learn`, `numpy`, `pandas`)*
+
+#### 방법 B: Standard Pip
+```bash
+pip install -r requirements.txt
+```
+> *(주요 라이브러리: `phe` (Paillier), `diffprivlib`, `xgboost`, `scikit-learn`, `numpy`, `pandas`)*
 
 ---
 

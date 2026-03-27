@@ -1,6 +1,31 @@
 import numpy as np
 import json
+import time
+import sys
 from crypto.heservice import HEService
+
+def get_comm_bytes(obj):
+    t_name = type(obj).__name__
+    if isinstance(obj, list):
+        return sum(get_comm_bytes(x) for x in obj)
+    elif isinstance(obj, dict):
+        return sum(get_comm_bytes(k) + get_comm_bytes(v) for k, v in obj.items())
+    elif isinstance(obj, tuple):
+        return sum(get_comm_bytes(x) for x in obj)
+    elif t_name == "EncryptedNumber":
+        return (obj.ciphertext().bit_length() + 7) // 8
+    elif t_name == "PaillierVector":
+        return get_comm_bytes(obj.data)
+    elif isinstance(obj, np.ndarray):
+        return obj.nbytes
+    elif isinstance(obj, (int, float, str, bool)):
+        return sys.getsizeof(obj)
+    else:
+        import pickle
+        try:
+            return len(pickle.dumps(obj))
+        except:
+            return sys.getsizeof(obj)
 from crypto.dp_injector import DPNoiseInjector
 from core.active_party import ActiveParty
 from core.passive_party import PassiveParty
@@ -33,6 +58,9 @@ class ELXGBClassifier:
         self.trees = []
         self.base_score = 0.5
         
+        self.total_pure_train_time = 0.0
+        self.total_comm_bytes = 0.0
+        
         self.he_svc = HEService()
         self.active_party = ActiveParty(self.he_svc)
         
@@ -62,8 +90,11 @@ class ELXGBClassifier:
         
         current_margins = np.zeros(len(y))
         
+        self.total_pure_train_time = 0.0
+        self.total_comm_bytes = 0.0
+        
         for t in range(self.n_estimators):
-            method_str = "HENS (TenSEAL Homomorphic Encryption)" if t == 0 else "DPNS (IBM Differential Privacy)"
+            method_str = "HENS (Paillier Homomorphic Encryption)" if t == 0 else "DPNS (IBM Differential Privacy)"
             print(f"[ELXGB] Building Ensemble Tree {t+1}/{self.n_estimators} via {method_str}...")
             
             self.active_party.y_pred = sigmoid(current_margins)
@@ -80,14 +111,26 @@ class ELXGBClassifier:
                 # 첫 트리는 HENS를 위해 단 한 번만 암호화
                 enc_g = self.he_svc.encrypt(g_raw.tolist())
                 enc_h = self.he_svc.encrypt(h_raw.tolist())
+                
+                # [Measure Comm] Active -> All Passive (Encrypted g, h Broadcast)
+                comm_sz = (get_comm_bytes(enc_g) + get_comm_bytes(enc_h)) * self.num_passive_parties
+                self.total_comm_bytes += comm_sz
+                print(f"  [COMM] Active -> Passive Broadcast (enc_g, enc_h): {comm_sz / 1024:.2f} KB (Time excluded from Pure Train)")
             else:
                 # 두 번째부터는 전체 벡터에 노이즈를 단 한 번만 주입
                 g_noisy, h_noisy = self.active_party.compute_noisy_dp_gradients(self.dp_injector)
+                
+                # [Measure Comm] Active -> All Passive (Noisy g, h Broadcast)
+                comm_sz = (get_comm_bytes(g_noisy) + get_comm_bytes(h_noisy)) * self.num_passive_parties
+                self.total_comm_bytes += comm_sz
+                print(f"  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): {comm_sz / 1024:.2f} KB")
             # ==========================================================
             
             node_counter = NodeIdCounter()
             initial_mask = np.ones(len(y), dtype=bool)
             
+            # --- [순수 연산 시간 측정 시작] ---
+            pure_train_start = time.time()
             tree_struct = self._build_tree_recursive(
                 current_mask=initial_mask, 
                 depth=0, 
@@ -97,11 +140,20 @@ class ELXGBClassifier:
                 enc_g=enc_g, enc_h=enc_h,
                 g_noisy=g_noisy, h_noisy=h_noisy
             )
+            pure_train_time = time.time() - pure_train_start
+            self.total_pure_train_time += pure_train_time
+            # ----------------------------------
             self.trees.append(tree_struct)
             
             # 다음 트리를 위해 마진 업데이트
             tree_margins = np.array([self._predict_single_tree(tree_struct, x_list) for x_list in zip(*X_list)])
             current_margins += self.lr * tree_margins
+
+        print("\n" + "="*50)
+        print(f"[ELXGB] Training Completed. Total Trees: {self.n_estimators}")
+        print(f" ⏱️ Pure Compute Time (Excluding Pre-Encryption): {self.total_pure_train_time:.4f} seconds")
+        print(f" 📡 Total Comm. Volume: {self.total_comm_bytes / 1024 / 1024:.4f} MB")
+        print("="*50 + "\n")
 
     def _build_tree_recursive(self, current_mask, depth, node_counter, tree_idx, 
                               g_raw, h_raw, enc_g, enc_h, g_noisy, h_noisy):
@@ -120,7 +172,13 @@ class ELXGBClassifier:
             histograms = {}
             for p_name, p_obj in self.passive_parties.items():
                 # 노드 분할 평가를 위해 current_mask를 함께 넘김
-                histograms[p_name] = p_obj.compute_encrypted_histograms(enc_g, enc_h, current_mask)
+                hist = p_obj.compute_encrypted_histograms(enc_g, enc_h, current_mask)
+                histograms[p_name] = hist
+                
+                # [Measure Comm] Passive -> Active (Node Histograms)
+                comm_sz = get_comm_bytes(hist)
+                self.total_comm_bytes += comm_sz
+                print(f"    [COMM] {p_name} -> Active (Node Histograms): {comm_sz / 1024:.2f} KB")
             
             best_split, max_gain = self.active_party.calculate_optimal_split(
                 histograms, lambda_val=self.lambda_val, gamma_val=self.gamma_val
@@ -132,11 +190,29 @@ class ELXGBClassifier:
             
             histograms = {}
             for p_name, p_obj in self.passive_parties.items():
-                histograms[p_name] = p_obj.compute_plaintext_histograms(g_masked, h_masked)
+                # 노이즈를 주입한 평문 히스토그램 연산
+                # DPNoiseInjector는 내부의 compute_plaintext_histograms가 반환한 결과를 그대로 받아 노이즈를 더함
+                # DPNS의 핵심적인 부분인, dp_injector의 위치 이동. (원래 패시브 파티 안에 있었으나 외부에서 주입)
+                plain_hists = p_obj.compute_plaintext_histograms(g_masked, h_masked)
+                
+                # 이 로직상 active_party.calculate_optimal_split_plaintext에 들어가므로,
+                # DP노이즈는 ActiveParty를 거치지만 ActiveParty는 그것이 노이즈가 섞인 것임을 모름
+                # 따라서 패시브 파티가 DP노이즈를 더한 뒤 전송한다는 뜻.
+                # (원래 패시브 파티에서 DP 주입하지만 여기서는 중앙 제어)
+                histograms[p_name] = plain_hists
+                
+                # [Measure Comm] Passive -> Active (Noisy Plaintext Histograms)
+                comm_sz = get_comm_bytes(plain_hists)
+                self.total_comm_bytes += comm_sz
+                print(f"    [COMM] {p_name} -> Active (DP Noisy Histograms): {comm_sz / 1024:.2f} KB")
             
             best_split, max_gain = self.active_party.calculate_optimal_split_plaintext(
                 histograms, lambda_val=self.lambda_val, gamma_val=self.gamma_val
             )
+            
+        if best_split is not None:
+            # Active Party가 찾은 분할 규칙을 다시 Passive로 Broadcasting (실제 분산 프레임워크상 사이즈)
+            self.total_comm_bytes += (64 * len(self.passive_parties))
         
         if best_split is None or max_gain <= 0:
             leaf_weight = -G_total / (H_total + self.lambda_val)

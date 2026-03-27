@@ -10,6 +10,7 @@ xgboost = "*"
 scikit-learn = "*"
 pandas = "*"
 diffprivlib = "*"
+phe = "*"
 
 [dev-packages]
 

@@ -71,25 +71,8 @@ class PassiveParty:
                 # 노드에 도달한 샘플과 빈에 포함된 샘플의 교집합
                 valid_mask = (I_vec & current_mask).astype(float)
                 
-                # --- [DEBUG] .dot() 호출 전 암호문/평문 마스크 전부 출력 ---
-                if not debug_printed:
-                    print()
-                    print("-" * 50)
-                    print("[DEBUG] === TenSEAL '.dot()' Data Content ===")
-                    
-                    try:
-                        # enc_g는 암호문이므로 내부 값을 보려면 decrypt()를 호출해야 합니다.
-                        # 계산에 쓰일 원본 값들이 들어있는지 확인합니다.
-                        decrypted_g = enc_g.decrypt()
-                        print(f"[DEBUG] enc_g decrypted contents (len={len(decrypted_g)}):\n{decrypted_g}")
-                    except Exception as e:
-                        print(f"[DEBUG] Failed to decrypt enc_g for printing: {e}")
-                        
-                    print(f"\n[DEBUG] valid_mask contents (len={len(valid_mask)}):\n{sum(valid_mask)}")
-                    print("-" * 50)
-                    debug_printed = True
-                # -------------------------------------------------------------
-                valid_mask += 1e-10  
+
+                valid_mask += 1e-10  ## 히스토그램의 값이 모두 0이면 dot-product가 안되서 작은 값 추가
                 
                 valid_mask = valid_mask.tolist()
                 sum_g = enc_g.dot(valid_mask)
