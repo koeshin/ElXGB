@@ -13,13 +13,17 @@ class PassiveParty:
         self.eps = eps
         self.X = None
         self.feature_names = None
+        self.global_feature_slots = []
+        self.total_feature_count = 0
         self.buckets = {}
         self.feature_bins = {}
         self.local_lookup_table = {}
 
-    def set_data(self, X: np.ndarray, feature_names: list = None):
+    def set_data(self, X: np.ndarray, feature_names: list = None, global_feature_slots: list = None, total_feature_count: int = 0):
         self.X = np.array(X)
         self.feature_names = feature_names if feature_names else [f"f{i}" for i in range(self.X.shape[1])]
+        self.global_feature_slots = global_feature_slots if global_feature_slots else list(range(1, self.X.shape[1] + 1))
+        self.total_feature_count = total_feature_count or len(self.global_feature_slots)
 
     def generate_global_buckets(self):
         """
@@ -98,17 +102,52 @@ class PassiveParty:
             histograms[attr_idx] = bin_histograms
         return histograms
 
-    def register_obfuscated_split(self, feat_idx: int, bin_idx: int) -> str:
+    def find_best_split_plaintext(self, g_noisy_masked: np.ndarray, h_noisy_masked: np.ndarray, lambda_val: float = 1.0, gamma_val: float = 0.0):
+        histograms = self.compute_plaintext_histograms(g_noisy_masked, h_noisy_masked)
+        best = None
+
+        for feat_idx, bins in histograms.items():
+            total_g = sum(g for g, _ in bins)
+            total_h = sum(h for _, h in bins)
+            g_left, h_left = 0.0, 0.0
+
+            for bin_idx in range(len(bins) - 1):
+                g_i, h_i = bins[bin_idx]
+                g_left += g_i
+                h_left += h_i
+                g_right = total_g - g_left
+                h_right = total_h - h_left
+
+                gain_left = (g_left ** 2) / (h_left + lambda_val) if (h_left + lambda_val) != 0 else 0.0
+                gain_right = (g_right ** 2) / (h_right + lambda_val) if (h_right + lambda_val) != 0 else 0.0
+                gain_total = (total_g ** 2) / (total_h + lambda_val) if (total_h + lambda_val) != 0 else 0.0
+                gain = 0.5 * (gain_left + gain_right - gain_total) - gamma_val
+
+                if best is None or gain > best["gain"]:
+                    best = {"feature_idx": feat_idx, "bin_idx": bin_idx, "gain": float(gain)}
+
+        return best
+
+    def register_obfuscated_split(self, feat_idx: int, bin_idx: int, he_service=None) -> str:
         """Attribute & Direction Obfuscation"""
         record_id = str(uuid.uuid4())
         bins = self.feature_bins[feat_idx]
         actual_threshold = bins[bin_idx + 1]
-        is_flipped = random.choice([True, False])
+        threshold_vector = None
+
+        if he_service is not None:
+            threshold_vector = [he_service.encrypt_scalar(self.global_feature_slots[feat_idx])]
+            for slot in range(1, self.total_feature_count + 1):
+                if slot == self.global_feature_slots[feat_idx]:
+                    threshold_vector.append(he_service.encrypt_scalar(actual_threshold))
+                else:
+                    threshold_vector.append(he_service.encrypt_scalar(random.uniform(-1.0, 1.0)))
         
         self.local_lookup_table[record_id] = {
             "feature_local_idx": feat_idx,
             "threshold": actual_threshold,
-            "is_flipped": is_flipped
+            "global_feature_slot": self.global_feature_slots[feat_idx],
+            "threshold_vector": threshold_vector
         }
         return record_id
 
@@ -116,14 +155,10 @@ class PassiveParty:
         record = self.local_lookup_table[record_id]
         feat_idx = record["feature_local_idx"]
         threshold = record["threshold"]
-        is_flipped = record["is_flipped"]
         
         feature_array = self.X[:, feat_idx]
         left_cond = feature_array < threshold
         right_cond = ~left_cond
-        
-        if is_flipped:
-            left_cond, right_cond = right_cond, left_cond
             
         left_mask = current_mask & left_cond
         right_mask = current_mask & right_cond
@@ -143,15 +178,11 @@ class PassiveParty:
             record = self.local_lookup_table[rid]
             feat_idx = record["feature_local_idx"]
             threshold = record["threshold"]
-            is_flipped = record["is_flipped"]
             
             feature_array = X_test[:, feat_idx]
             
             # 왼쪽 분기 조건 (기본값)
             left_cond = feature_array < threshold
-            # 방향 난독화(Direction Obfuscation)가 적용되었으면 뒤집음
-            if is_flipped:
-                left_cond = ~left_cond
                 
             matrix[rid] = left_cond.tolist()
             

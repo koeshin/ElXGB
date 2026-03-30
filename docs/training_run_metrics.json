@@ -1,0 +1,26 @@
+{
+  "config": {
+    "dataset": "sklearn_breast_cancer",
+    "train_samples": 398,
+    "test_samples": 171,
+    "features": 30,
+    "num_parties": 2,
+    "split_idx": 15,
+    "n_estimators": 2,
+    "max_depth": 2,
+    "bins": 32,
+    "eps": 0.03125,
+    "learning_rate": 1.0,
+    "dp_epsilon": 10.0,
+    "random_state": 42
+  },
+  "metrics": {
+    "train_accuracy": 0.9472361809045227,
+    "test_accuracy": 0.9298245614035088,
+    "pure_train_time_sec": 81.35690379142761,
+    "train_wall_time_sec": 85.82841205596924,
+    "total_comm_bytes": 958344,
+    "total_comm_kb": 935.8828125,
+    "total_comm_mb": 0.9139480590820312
+  }
+}

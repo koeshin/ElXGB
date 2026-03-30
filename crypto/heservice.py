@@ -8,6 +8,13 @@ class PaillierVector:
     def __init__(self, encrypted_list):
         self.data = encrypted_list
 
+    def __add__(self, other):
+        if not isinstance(other, PaillierVector):
+            raise TypeError("PaillierVector can only be added to another PaillierVector")
+        if len(self.data) != len(other.data):
+            raise ValueError("PaillierVector lengths must match")
+        return PaillierVector([left + right for left, right in zip(self.data, other.data)])
+
     def dot(self, plain_vector: list):
         """
         [논문 수식 완벽 재현]
@@ -53,6 +60,9 @@ class HEService:
         encrypted_list = [self.public_key.encrypt(float(x)) for x in vector]
         return PaillierVector(encrypted_list)
 
+    def encrypt_scalar(self, value: float):
+        return self.public_key.encrypt(float(value))
+
     def decrypt(self, enc_item) -> list[float]:
         """
         [Active Party 전용] 암호화된 벡터(히스토그램 등)를 평문으로 복호화합니다.
@@ -61,9 +71,15 @@ class HEService:
         if isinstance(enc_item, (int, float)):
             # 아무런 빈에 들어가지 않아 0이 반환되었을 경우
             return [float(enc_item)]
+
+        if isinstance(enc_item, PaillierVector):
+            return [float(self.private_key.decrypt(item)) for item in enc_item.data]
             
         value = self.private_key.decrypt(enc_item)
         return [float(value)]
+
+    def decrypt_scalar(self, enc_item) -> float:
+        return self.decrypt(enc_item)[0]
     
     def add(self, enc_vec1, enc_vec2):
         """암호 상태에서의 덧셈 (Paillier Additive Homomorphism 수식 적용)"""
