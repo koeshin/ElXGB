@@ -55,8 +55,10 @@ class ELXGBClassifier:
         self.lr = learning_rate
         self.lambda_val = lambda_val
         self.gamma_val = gamma_val
+        self.num_passive_parties = num_passive_parties
         self.trees = []
         self.base_score = 0.5
+        self.total_feature_count = 0
         
         self.total_pure_train_time = 0.0
         self.total_comm_bytes = 0.0
@@ -83,9 +85,14 @@ class ELXGBClassifier:
             feat_names_list = [None] * len(X_list)
             
         self.active_party.set_data(y)
-        
+        self.total_feature_count = sum(X_data.shape[1] for X_data in X_list)
+
+        next_slot = 1
         for (p_name, p_obj), X_data, feat_names in zip(self.passive_parties.items(), X_list, feat_names_list):
-            p_obj.set_data(X_data, feat_names)
+            slot_count = X_data.shape[1]
+            global_slots = list(range(next_slot, next_slot + slot_count))
+            next_slot += slot_count
+            p_obj.set_data(X_data, feat_names, global_feature_slots=global_slots, total_feature_count=self.total_feature_count)
             p_obj.generate_global_buckets()
         
         current_margins = np.zeros(len(y))
@@ -188,27 +195,28 @@ class ELXGBClassifier:
             g_masked = g_noisy * current_mask
             h_masked = h_noisy * current_mask
             
-            histograms = {}
+            local_candidates = {}
             for p_name, p_obj in self.passive_parties.items():
-                # 노이즈를 주입한 평문 히스토그램 연산
-                # DPNoiseInjector는 내부의 compute_plaintext_histograms가 반환한 결과를 그대로 받아 노이즈를 더함
-                # DPNS의 핵심적인 부분인, dp_injector의 위치 이동. (원래 패시브 파티 안에 있었으나 외부에서 주입)
-                plain_hists = p_obj.compute_plaintext_histograms(g_masked, h_masked)
-                
-                # 이 로직상 active_party.calculate_optimal_split_plaintext에 들어가므로,
-                # DP노이즈는 ActiveParty를 거치지만 ActiveParty는 그것이 노이즈가 섞인 것임을 모름
-                # 따라서 패시브 파티가 DP노이즈를 더한 뒤 전송한다는 뜻.
-                # (원래 패시브 파티에서 DP 주입하지만 여기서는 중앙 제어)
-                histograms[p_name] = plain_hists
-                
-                # [Measure Comm] Passive -> Active (Noisy Plaintext Histograms)
-                comm_sz = get_comm_bytes(plain_hists)
+                candidate = p_obj.find_best_split_plaintext(
+                    g_masked,
+                    h_masked,
+                    lambda_val=self.lambda_val,
+                    gamma_val=self.gamma_val
+                )
+                if candidate is not None:
+                    local_candidates[p_name] = candidate
+
+                # [Measure Comm] Passive -> Active (Local Max Gain Only)
+                comm_sz = get_comm_bytes(candidate) if candidate is not None else 0
                 self.total_comm_bytes += comm_sz
-                print(f"    [COMM] {p_name} -> Active (DP Noisy Histograms): {comm_sz / 1024:.2f} KB")
-            
-            best_split, max_gain = self.active_party.calculate_optimal_split_plaintext(
-                histograms, lambda_val=self.lambda_val, gamma_val=self.gamma_val
-            )
+                print(f"    [COMM] {p_name} -> Active (DP Local Max Gain): {comm_sz / 1024:.2f} KB")
+
+            best_split = None
+            max_gain = -np.inf
+            for p_name, candidate in local_candidates.items():
+                if candidate["gain"] > max_gain:
+                    max_gain = candidate["gain"]
+                    best_split = (p_name, candidate["feature_idx"], candidate["bin_idx"])
             
         if best_split is not None:
             # Active Party가 찾은 분할 규칙을 다시 Passive로 Broadcasting (실제 분산 프레임워크상 사이즈)
@@ -220,10 +228,8 @@ class ELXGBClassifier:
             
         best_party, best_feat_idx, best_bin_idx = best_split
         party_obj = self.passive_parties[best_party]
-        feat_name = party_obj.feature_names[best_feat_idx]
         
-        record_id = party_obj.register_obfuscated_split(best_feat_idx, best_bin_idx)
-        rec = party_obj.local_lookup_table[record_id]
+        record_id = party_obj.register_obfuscated_split(best_feat_idx, best_bin_idx, he_service=self.he_svc)
         
         left_mask, right_mask = party_obj.split_dataset_mask(record_id, current_mask)
         
@@ -235,8 +241,6 @@ class ELXGBClassifier:
         return {
             "nodeid": node_id,
             "depth": depth,
-            "split": str(feat_name),
-            "split_condition": float(rec["threshold"]),
             "party": best_party,
             "record_id": record_id,
             "gain": float(max_gain),
@@ -258,8 +262,6 @@ class ELXGBClassifier:
         val = x_target[rec["feature_local_idx"]]
         
         go_left = val < rec["threshold"]
-        if rec["is_flipped"]:
-            go_left = not go_left
             
         if go_left:
             return self._predict_single_tree(node["children"][0], x_list)
