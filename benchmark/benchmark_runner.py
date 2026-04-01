@@ -176,25 +176,25 @@ class BenchmarkRunner:
 
 
 if __name__ == "__main__":
-    datasets = ['bank_marketing', 'credit_card']
+    import argparse
+    parser = argparse.ArgumentParser(description='ELXGB Benchmark Runner')
+    parser.add_argument('--dataset', type=str, default='bank_marketing', choices=['bank_marketing', 'credit_card'], help='Dataset name')
+    parser.add_argument('--trees', type=int, default=3, help='Number of trees (n_estimators)')
+    parser.add_argument('--depth', type=int, default=3, help='Max depth of each tree')
+    parser.add_argument('--bins', type=int, default=32, help='Number of histogram bins')
+    parser.add_argument('--dp_eps', type=float, default=10.0, help='DP epsilon')
+    parser.add_argument('--parties', type=int, default=2, help='Number of passive parties')
     
-    # 설정값: 패시브 파티 N명, 트리 2~6, Bins 32, 깊이 3, dp 10
-    NUM_PARTIES = 2
-    BINS = 32
-    DP_EPS = 10.0
-    DEPTH = 3
-    TREE_RANGE = range(2, 7)
+    args = parser.parse_args()
     
-    for d_name in datasets:
-        X, y, feature_names = load_dataset(d_name)
-        
-        for n_trees in TREE_RANGE:
-            runner = BenchmarkRunner(
-                dataset_name=d_name,
-                n_estimators=n_trees,
-                max_depth=DEPTH,
-                bins=BINS,
-                dp_eps=DP_EPS,
-                num_parties=NUM_PARTIES
-            )
-            runner.run(X, y, feature_names)
+    X, y, feature_names = load_dataset(args.dataset)
+    
+    runner = BenchmarkRunner(
+        dataset_name=args.dataset,
+        n_estimators=args.trees,
+        max_depth=args.depth,
+        bins=args.bins,
+        dp_eps=args.dp_eps,
+        num_parties=args.parties
+    )
+    runner.run(X, y, feature_names)
