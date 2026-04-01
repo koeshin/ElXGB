@@ -156,3 +156,52 @@ class PassiveParty:
             matrix[rid] = left_cond.tolist()
             
         return matrix
+
+    def calculate_local_optimal_split_plaintext(self, g_noisy, h_noisy, current_mask, lambda_val=1.0, gamma_val=0.0):
+        """
+        (DPNS 전용) Active Party가 트리 시작 전 딱 1회 DP 노이즈를 주입해둔
+        가짜 오차(g_noisy, h_noisy)를 수신받아, 로컬에서 히스토그램을 묶고
+        자체적으로 Gain을 스캔하여 "우리 파티의 1등 후보" 하나만 도출합니다.
+        
+        [핵심] 여기서는 추가적인 노이즈 주입이 절대 없습니다!
+        노이즈는 Active Party가 이미 전체 오차 배열에 1회 씌운 상태입니다.
+        통신량 O(1) 달성의 핵심 로직.
+        """
+        # 1. current_mask로 해당 노드에 속하는 샘플만 필터링
+        g_masked = g_noisy * current_mask
+        h_masked = h_noisy * current_mask
+        
+        # 2. 로컬 히스토그램 집계 (이미 노이즈가 섞인 평문 기반)
+        hists = self.compute_plaintext_histograms(g_masked, h_masked)
+        
+        # 3. Gain 스캔 (추가 노이즈 없이 그대로 사용)
+        max_gain = -float('inf')
+        local_best_feat_idx = None
+        local_best_bin_idx = None
+        
+        for feature_idx, bins in hists.items():
+            total_G = sum(b[0] for b in bins)
+            total_H = sum(b[1] for b in bins)
+            
+            G_L, H_L = 0.0, 0.0
+            for split_bin_idx in range(len(bins) - 1):
+                g_i, h_i = bins[split_bin_idx]
+                G_L += g_i
+                H_L += h_i
+                
+                G_R = total_G - G_L
+                H_R = total_H - H_L
+                
+                gain_L = (G_L ** 2) / (H_L + lambda_val) if (H_L + lambda_val) != 0 else 0
+                gain_R = (G_R ** 2) / (H_R + lambda_val) if (H_R + lambda_val) != 0 else 0
+                gain_Total = (total_G ** 2) / (total_H + lambda_val) if (total_H + lambda_val) != 0 else 0
+                
+                gain = 0.5 * (gain_L + gain_R - gain_Total) - gamma_val
+                
+                if gain > max_gain:
+                    max_gain = gain
+                    local_best_feat_idx = feature_idx
+                    local_best_bin_idx = split_bin_idx
+                    
+        # 무거운 전체 히스토그램 대신 1등 메타데이터 튜플 1개만 리턴
+        return max_gain, local_best_feat_idx, local_best_bin_idx

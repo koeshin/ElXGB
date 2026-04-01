@@ -1,0 +1,494 @@
+[
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "x6",
+        "split_condition": 2.0,
+        "party": "Party_1",
+        "record_id": "9d374ae2-3756-4152-8adb-15a8629816dd",
+        "gain": 1273.777537244987,
+        "yes": 1,
+        "no": 8,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "x8",
+                "split_condition": 0.0,
+                "party": "Party_1",
+                "record_id": "f5231467-1ae8-4b35-8593-5e47404dcaac",
+                "gain": 19.847663592046473,
+                "yes": 2,
+                "no": 5,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 2443.0,
+                        "party": "Party_2",
+                        "record_id": "bb38db15-b187-480e-bed1-b3dfb6ded6df",
+                        "gain": 7.278860597178971,
+                        "yes": 3,
+                        "no": 4,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "leaf": 0.6
+                            },
+                            {
+                                "nodeid": 4,
+                                "leaf": -0.6407766990291263
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 5,
+                        "depth": 2,
+                        "split": "x10",
+                        "split_condition": 2.0,
+                        "party": "Party_1",
+                        "record_id": "83af66a7-9c39-4ced-a220-04b9ec5dfc20",
+                        "gain": 9.99558864837934,
+                        "yes": 6,
+                        "no": 7,
+                        "children": [
+                            {
+                                "nodeid": 6,
+                                "leaf": 0.6828528072837633
+                            },
+                            {
+                                "nodeid": 7,
+                                "leaf": 1.0586011342155008
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 8,
+                "depth": 1,
+                "split": "x7",
+                "split_condition": 2.0,
+                "party": "Party_1",
+                "record_id": "124cca8f-2aaa-4f52-be17-d24757c3acb6",
+                "gain": 254.40440909141944,
+                "yes": 9,
+                "no": 12,
+                "children": [
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "x11",
+                        "split_condition": 2.0,
+                        "party": "Party_1",
+                        "record_id": "806c126f-108a-4072-9a96-be03cd890997",
+                        "gain": 15.548443780015845,
+                        "yes": 10,
+                        "no": 11,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "leaf": 0.09633911368015415
+                            },
+                            {
+                                "nodeid": 11,
+                                "leaf": -0.48414539829853054
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 12,
+                        "depth": 2,
+                        "split": "x20",
+                        "split_condition": 863.0,
+                        "party": "Party_2",
+                        "record_id": "444bc383-6739-42ab-94b1-adb4e835b95f",
+                        "gain": 78.5086144334382,
+                        "yes": 13,
+                        "no": 14,
+                        "children": [
+                            {
+                                "nodeid": 13,
+                                "leaf": -1.154366960054164
+                            },
+                            {
+                                "nodeid": 14,
+                                "leaf": -1.5466492412691497
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "x22",
+        "split_condition": 13137.0625,
+        "party": "Party_2",
+        "record_id": "156e73e4-1ac8-4a14-a444-c453e619d16c",
+        "gain": 309.9578752708538,
+        "yes": 1,
+        "no": 8,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "x20",
+                "split_condition": 2376.40625,
+                "party": "Party_2",
+                "record_id": "6b224331-a410-4a15-b801-340e2dafdcc8",
+                "gain": 9324.51723473509,
+                "yes": 2,
+                "no": 5,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "x16",
+                        "split_condition": 58763.84375,
+                        "party": "Party_2",
+                        "record_id": "8152f10a-216d-4cf9-8670-1e1004e7b304",
+                        "gain": 3046795.9141927804,
+                        "yes": 3,
+                        "no": 4,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "leaf": -0.6963290928922486
+                            },
+                            {
+                                "nodeid": 4,
+                                "leaf": -0.7036820255276048
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 5,
+                        "depth": 2,
+                        "split": "x21",
+                        "split_condition": 725.65625,
+                        "party": "Party_2",
+                        "record_id": "6eea1d62-98cf-4d1d-8c30-d002fe1a194e",
+                        "gain": 544.6832964729231,
+                        "yes": 6,
+                        "no": 7,
+                        "children": [
+                            {
+                                "nodeid": 6,
+                                "leaf": -0.3837310036410487
+                            },
+                            {
+                                "nodeid": 7,
+                                "leaf": -0.5735800434659792
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 8,
+                "depth": 1,
+                "split": "x15",
+                "split_condition": 0.0,
+                "party": "Party_2",
+                "record_id": "08a8289f-c0b4-48f7-bc6b-498a03752017",
+                "gain": 173.28419419811453,
+                "yes": 9,
+                "no": 12,
+                "children": [
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 2443.0,
+                        "party": "Party_2",
+                        "record_id": "55a4c86f-94fd-46f9-aae7-d24ab009b717",
+                        "gain": 65857.17543653293,
+                        "yes": 10,
+                        "no": 11,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "leaf": -0.6057034414864918
+                            },
+                            {
+                                "nodeid": 11,
+                                "leaf": -0.18554567508842548
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 12,
+                        "depth": 2,
+                        "split": "x19",
+                        "split_condition": 4500.0,
+                        "party": "Party_2",
+                        "record_id": "7063cc7b-398d-4879-a5eb-82b0e82a4b07",
+                        "gain": 97.14958576475647,
+                        "yes": 13,
+                        "no": 14,
+                        "children": [
+                            {
+                                "nodeid": 13,
+                                "leaf": -0.4808781745208179
+                            },
+                            {
+                                "nodeid": 14,
+                                "leaf": -0.13239643742165844
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "x1",
+        "split_condition": 30000.0,
+        "party": "Party_1",
+        "record_id": "2def2574-7f52-4bd9-b322-1da9107a0165",
+        "gain": 211.51382906017622,
+        "yes": 1,
+        "no": 8,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "x20",
+                "split_condition": 14776.5,
+                "party": "Party_2",
+                "record_id": "6307c612-06d1-4017-a3de-91dc667da13e",
+                "gain": 167.80396537139032,
+                "yes": 2,
+                "no": 5,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 1553.8125,
+                        "party": "Party_2",
+                        "record_id": "58e5129b-0354-408e-b70b-6cc5fcfe69dd",
+                        "gain": 107.46688132753653,
+                        "yes": 3,
+                        "no": 4,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "leaf": -0.11622827423694462
+                            },
+                            {
+                                "nodeid": 4,
+                                "leaf": 0.17823391661000837
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 5,
+                        "depth": 2,
+                        "split": "x15",
+                        "split_condition": 42524.5,
+                        "party": "Party_2",
+                        "record_id": "8c4f0092-08dd-46d3-b4ec-c5bb07445250",
+                        "gain": 10073.431776278014,
+                        "yes": 6,
+                        "no": 7,
+                        "children": [
+                            {
+                                "nodeid": 6,
+                                "leaf": -0.2825140286352143
+                            },
+                            {
+                                "nodeid": 7,
+                                "leaf": -0.35970820254825503
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 8,
+                "depth": 1,
+                "split": "x12",
+                "split_condition": 8644.59375,
+                "party": "Party_2",
+                "record_id": "80f56f1b-9586-43ad-9c35-5115caa2a838",
+                "gain": 2295.7499447690925,
+                "yes": 9,
+                "no": 12,
+                "children": [
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "x22",
+                        "split_condition": 568.6875,
+                        "party": "Party_2",
+                        "record_id": "ff6c3a77-b075-4ba8-8d52-603dc4dd945c",
+                        "gain": 2264.950875514584,
+                        "yes": 10,
+                        "no": 11,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "leaf": 0.2824381202200719
+                            },
+                            {
+                                "nodeid": 11,
+                                "leaf": 0.21577728650985134
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 12,
+                        "depth": 2,
+                        "split": "x23",
+                        "split_condition": 1000.0,
+                        "party": "Party_2",
+                        "record_id": "4c408ea6-5ef1-44a6-a610-63b739f1cb57",
+                        "gain": 23969.318515883726,
+                        "yes": 13,
+                        "no": 14,
+                        "children": [
+                            {
+                                "nodeid": 13,
+                                "leaf": 0.5825379934894791
+                            },
+                            {
+                                "nodeid": 14,
+                                "leaf": 0.5520144637147552
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "x5",
+        "split_condition": 23.0,
+        "party": "Party_1",
+        "record_id": "9df4886c-92a0-4b8b-84ee-ae86a82e1570",
+        "gain": 216.2180727359643,
+        "yes": 1,
+        "no": 8,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "x21",
+                "split_condition": 2474.125,
+                "party": "Party_2",
+                "record_id": "cee546e7-39ff-430c-903c-061f01a946b2",
+                "gain": 201.9935403714772,
+                "yes": 2,
+                "no": 5,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "x16",
+                        "split_condition": 120373.1875,
+                        "party": "Party_2",
+                        "record_id": "03f0687a-02ae-4bfa-9074-705c1d0c718b",
+                        "gain": 3190.7820280990986,
+                        "yes": 3,
+                        "no": 4,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "leaf": 0.928012342545178
+                            },
+                            {
+                                "nodeid": 4,
+                                "leaf": 0.03623522559029611
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 5,
+                        "depth": 2,
+                        "split": "x12",
+                        "split_condition": 66377.0,
+                        "party": "Party_2",
+                        "record_id": "156b5d89-383d-4342-80cc-52809018a067",
+                        "gain": 190.06005667460332,
+                        "yes": 6,
+                        "no": 7,
+                        "children": [
+                            {
+                                "nodeid": 6,
+                                "leaf": 0.06946840110505945
+                            },
+                            {
+                                "nodeid": 7,
+                                "leaf": -0.26827614340041384
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 8,
+                "depth": 1,
+                "split": "x20",
+                "split_condition": 615.71875,
+                "party": "Party_2",
+                "record_id": "b15f9dbc-4089-49e0-8f6c-d3648d3299e5",
+                "gain": 10130.84410288104,
+                "yes": 9,
+                "no": 12,
+                "children": [
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "x17",
+                        "split_condition": 17108.5,
+                        "party": "Party_2",
+                        "record_id": "3ef84d47-31c7-43b8-aeaf-f953205d174b",
+                        "gain": 1739.215988968243,
+                        "yes": 10,
+                        "no": 11,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "leaf": -0.4139601590146479
+                            },
+                            {
+                                "nodeid": 11,
+                                "leaf": -0.27736716108864085
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 12,
+                        "depth": 2,
+                        "split": "x23",
+                        "split_condition": 1727.0,
+                        "party": "Party_2",
+                        "record_id": "6bd5e4ff-f850-4658-aad0-fb5777215fcc",
+                        "gain": 89714.54401324475,
+                        "yes": 13,
+                        "no": 14,
+                        "children": [
+                            {
+                                "nodeid": 13,
+                                "leaf": 0.3728770793200629
+                            },
+                            {
+                                "nodeid": 14,
+                                "leaf": -0.1723682592160386
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

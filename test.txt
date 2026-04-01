@@ -1,537 +1,547 @@
 Loading dataset: bank_marketing...
 
-[bank_marketing] Trees: 2, Depth: 4, Bins: 32, DP-eps: 10.0
+[bank_marketing] Trees: 2, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=36168, Test=9043
 [1/3] Training XGBoost Library...
  -> XGB Lib Train: 0.8992 | Test: 0.8938
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/2...
 [PlaintextXGB] Building Tree 2/2...
- -> Plaintext Train: 0.9017 | Test: 0.8937
+ -> Plaintext Train: 0.8977 | Test: 0.8936
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/2 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/2 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 18081.79 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.71 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.71 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.46 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/2 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.9019 | Test: 0.8966
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 2
+ - Pure Compute Time (Excluding Pre-Encryption): 352.3142 seconds
+ - Total Comm. Volume: 19.0529 MB
+==================================================
+
+ -> ELXGB Train: 0.8952 | Test: 0.8902
 ----------------------------------------------------------------------
 XGB Lib              Test: 0.8938
-Plaintext            Test: 0.8937
-ELXGB                Test: 0.8966
+Plaintext            Test: 0.8936
+ELXGB                Test: 0.8902
 ----------------------------------------------------------------------
 
-[bank_marketing] Trees: 3, Depth: 4, Bins: 32, DP-eps: 10.0
+[bank_marketing] Trees: 3, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=36168, Test=9043
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.9032 | Test: 0.8954
+ -> XGB Lib Train: 0.9008 | Test: 0.8959
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/3...
 [PlaintextXGB] Building Tree 2/3...
 [PlaintextXGB] Building Tree 3/3...
- -> Plaintext Train: 0.9025 | Test: 0.8938
+ -> Plaintext Train: 0.9000 | Test: 0.8923
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/3 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/3 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 18082.36 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.46 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.71 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/3 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 3/3 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.8995 | Test: 0.8955
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 3
+ - Pure Compute Time (Excluding Pre-Encryption): 352.5472 seconds
+ - Total Comm. Volume: 20.1591 MB
+==================================================
+
+ -> ELXGB Train: 0.8936 | Test: 0.8893
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8954
-Plaintext            Test: 0.8938
-ELXGB                Test: 0.8955
+XGB Lib              Test: 0.8959
+Plaintext            Test: 0.8923
+ELXGB                Test: 0.8893
 ----------------------------------------------------------------------
 
-[bank_marketing] Trees: 4, Depth: 4, Bins: 32, DP-eps: 10.0
+[bank_marketing] Trees: 4, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=36168, Test=9043
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.9027 | Test: 0.8945
+ -> XGB Lib Train: 0.9015 | Test: 0.8959
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/4...
 [PlaintextXGB] Building Tree 2/4...
 [PlaintextXGB] Building Tree 3/4...
 [PlaintextXGB] Building Tree 4/4...
- -> Plaintext Train: 0.9039 | Test: 0.8983
+ -> Plaintext Train: 0.9002 | Test: 0.8933
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/4 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/4 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 18082.78 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/4 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 3/4 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
 [ELXGB] Building Ensemble Tree 4/4 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+current tree depth: 3
+current tree depth: 3
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.8987 | Test: 0.8952
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 4
+ - Pure Compute Time (Excluding Pre-Encryption): 357.0115 seconds
+ - Total Comm. Volume: 21.2652 MB
+==================================================
+
+ -> ELXGB Train: 0.8924 | Test: 0.8899
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8945
-Plaintext            Test: 0.8983
-ELXGB                Test: 0.8952
+XGB Lib              Test: 0.8959
+Plaintext            Test: 0.8933
+ELXGB                Test: 0.8899
 ----------------------------------------------------------------------
 
-[bank_marketing] Trees: 5, Depth: 4, Bins: 32, DP-eps: 10.0
+[bank_marketing] Trees: 5, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=36168, Test=9043
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.9034 | Test: 0.8970
+ -> XGB Lib Train: 0.9023 | Test: 0.8961
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/5...
 [PlaintextXGB] Building Tree 2/5...
 [PlaintextXGB] Building Tree 3/5...
 [PlaintextXGB] Building Tree 4/5...
 [PlaintextXGB] Building Tree 5/5...
- -> Plaintext Train: 0.9060 | Test: 0.9009
+ -> Plaintext Train: 0.8997 | Test: 0.8937
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/5 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/5 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 18082.81 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/5 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 3/5 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 4/5 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 5/5 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
 current tree depth: 2
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.9014 | Test: 0.8938
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 5
+ - Pure Compute Time (Excluding Pre-Encryption): 354.4024 seconds
+ - Total Comm. Volume: 22.3710 MB
+==================================================
+
+ -> ELXGB Train: 0.8994 | Test: 0.8943
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8970
-Plaintext            Test: 0.9009
-ELXGB                Test: 0.8938
+XGB Lib              Test: 0.8961
+Plaintext            Test: 0.8937
+ELXGB                Test: 0.8943
 ----------------------------------------------------------------------
 
-[bank_marketing] Trees: 6, Depth: 4, Bins: 32, DP-eps: 10.0
+[bank_marketing] Trees: 6, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=36168, Test=9043
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.9062 | Test: 0.8982
+ -> XGB Lib Train: 0.9027 | Test: 0.8976
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/6...
 [PlaintextXGB] Building Tree 2/6...
@@ -539,712 +549,741 @@ Dataset Split: Train=36168, Test=9043
 [PlaintextXGB] Building Tree 4/6...
 [PlaintextXGB] Building Tree 5/6...
 [PlaintextXGB] Building Tree 6/6...
- -> Plaintext Train: 0.9069 | Test: 0.9015
+ -> Plaintext Train: 0.9029 | Test: 0.8963
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/6 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/6 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 18081.96 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.46 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.46 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 19.71 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 19.72 KB
+    [COMM] Party_2 -> Active (Node Histograms): 22.47 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 3/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+current tree depth: 3
+current tree depth: 3
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
 [ELXGB] Building Ensemble Tree 4/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 [ELXGB] Building Ensemble Tree 5/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 6/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 1130.25 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.9012 | Test: 0.8957
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 6
+ - Pure Compute Time (Excluding Pre-Encryption): 354.0110 seconds
+ - Total Comm. Volume: 23.4758 MB
+==================================================
+
+ -> ELXGB Train: 0.8984 | Test: 0.8945
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8982
-Plaintext            Test: 0.9015
-ELXGB                Test: 0.8957
+XGB Lib              Test: 0.8976
+Plaintext            Test: 0.8963
+ELXGB                Test: 0.8945
 ----------------------------------------------------------------------
 Loading dataset: credit_card...
 
-[credit_card] Trees: 2, Depth: 4, Bins: 32, DP-eps: 10.0
+[credit_card] Trees: 2, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=24000, Test=6000
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.8233 | Test: 0.8190
+ -> XGB Lib Train: 0.8216 | Test: 0.8185
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/2...
 [PlaintextXGB] Building Tree 2/2...
- -> Plaintext Train: 0.8234 | Test: 0.8207
+ -> Plaintext Train: 0.8211 | Test: 0.8183
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/2 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/2 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 11999.55 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.33 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.33 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.33 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.33 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/2 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
- -> ELXGB Train: 0.8215 | Test: 0.8175
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 2
+ - Pure Compute Time (Excluding Pre-Encryption): 589.2332 seconds
+ - Total Comm. Volume: 13.1721 MB
+==================================================
+
+ -> ELXGB Train: 0.8231 | Test: 0.8208
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8190
-Plaintext            Test: 0.8207
-ELXGB                Test: 0.8175
+XGB Lib              Test: 0.8185
+Plaintext            Test: 0.8183
+ELXGB                Test: 0.8208
 ----------------------------------------------------------------------
 
-[credit_card] Trees: 3, Depth: 4, Bins: 32, DP-eps: 10.0
+[credit_card] Trees: 3, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=24000, Test=6000
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.8236 | Test: 0.8175
+ -> XGB Lib Train: 0.8227 | Test: 0.8187
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/3...
 [PlaintextXGB] Building Tree 2/3...
 [PlaintextXGB] Building Tree 3/3...
- -> Plaintext Train: 0.8237 | Test: 0.8200
+ -> Plaintext Train: 0.8218 | Test: 0.8187
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/3 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/3 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 11999.00 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/3 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
 current tree depth: 3
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 3/3 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.8219 | Test: 0.8195
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 3
+ - Pure Compute Time (Excluding Pre-Encryption): 584.6082 seconds
+ - Total Comm. Volume: 13.9059 MB
+==================================================
+
+ -> ELXGB Train: 0.8224 | Test: 0.8213
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8175
-Plaintext            Test: 0.8200
-ELXGB                Test: 0.8195
+XGB Lib              Test: 0.8187
+Plaintext            Test: 0.8187
+ELXGB                Test: 0.8213
 ----------------------------------------------------------------------
 
-[credit_card] Trees: 4, Depth: 4, Bins: 32, DP-eps: 10.0
+[credit_card] Trees: 4, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=24000, Test=6000
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.8234 | Test: 0.8180
+ -> XGB Lib Train: 0.8220 | Test: 0.8187
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/4...
 [PlaintextXGB] Building Tree 2/4...
 [PlaintextXGB] Building Tree 3/4...
 [PlaintextXGB] Building Tree 4/4...
- -> Plaintext Train: 0.8232 | Test: 0.8170
+ -> Plaintext Train: 0.8205 | Test: 0.8168
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/4 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/4 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 11998.95 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/4 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 3/4 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 4/4 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.8220 | Test: 0.8198
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 4
+ - Pure Compute Time (Excluding Pre-Encryption): 587.3644 seconds
+ - Total Comm. Volume: 14.6402 MB
+==================================================
+
+ -> ELXGB Train: 0.8209 | Test: 0.8197
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8180
-Plaintext            Test: 0.8170
-ELXGB                Test: 0.8198
+XGB Lib              Test: 0.8187
+Plaintext            Test: 0.8168
+ELXGB                Test: 0.8197
 ----------------------------------------------------------------------
 
-[credit_card] Trees: 5, Depth: 4, Bins: 32, DP-eps: 10.0
+[credit_card] Trees: 5, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=24000, Test=6000
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.8236 | Test: 0.8180
+ -> XGB Lib Train: 0.8222 | Test: 0.8193
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/5...
 [PlaintextXGB] Building Tree 2/5...
 [PlaintextXGB] Building Tree 3/5...
 [PlaintextXGB] Building Tree 4/5...
 [PlaintextXGB] Building Tree 5/5...
- -> Plaintext Train: 0.8246 | Test: 0.8200
+ -> Plaintext Train: 0.8217 | Test: 0.8182
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/5 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/5 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 11999.30 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.33 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.33 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/5 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+current tree depth: 3
+current tree depth: 3
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 3/5 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 4/5 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+current tree depth: 3
+current tree depth: 3
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 5/5 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+current tree depth: 3
+current tree depth: 3
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.8218 | Test: 0.8190
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 5
+ - Pure Compute Time (Excluding Pre-Encryption): 594.5077 seconds
+ - Total Comm. Volume: 15.3746 MB
+==================================================
+
+ -> ELXGB Train: 0.8202 | Test: 0.8200
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8180
-Plaintext            Test: 0.8200
-ELXGB                Test: 0.8190
+XGB Lib              Test: 0.8193
+Plaintext            Test: 0.8182
+ELXGB                Test: 0.8200
 ----------------------------------------------------------------------
 
-[credit_card] Trees: 6, Depth: 4, Bins: 32, DP-eps: 10.0
+[credit_card] Trees: 6, Depth: 3, Bins: 32, DP-eps: 10.0
 Dataset Split: Train=24000, Test=6000
 [1/3] Training XGBoost Library...
- -> XGB Lib Train: 0.8242 | Test: 0.8187
+ -> XGB Lib Train: 0.8220 | Test: 0.8198
 [2/3] Training Plaintext XGBoost (Our Implementation, No Crypto)...
 [PlaintextXGB] Building Tree 1/6...
 [PlaintextXGB] Building Tree 2/6...
@@ -1252,195 +1291,202 @@ Dataset Split: Train=24000, Test=6000
 [PlaintextXGB] Building Tree 4/6...
 [PlaintextXGB] Building Tree 5/6...
 [PlaintextXGB] Building Tree 6/6...
- -> Plaintext Train: 0.8240 | Test: 0.8197
+ -> Plaintext Train: 0.8222 | Test: 0.8198
 [3/3] Training ELXGB (Federated + HE/DP)...
-[ELXGB] Building Ensemble Tree 1/6 via HENS (TenSEAL Homomorphic Encryption)...
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
-WARNING: The input does not fit in a single ciphertext, and some operations will be disabled.
-The following operations are disabled in this setup: matmul, matmul_plain, enc_matmul_plain, conv2d_im2col.
-If you need to use those operations, try increasing the poly_modulus parameter, to fit your input.
+[HEService] 초기화: Paillier 공개키/비밀키 쌍 생성 중... (조금 오래 걸릴 수 있습니다)
+[HEService] Paillier 512비트 스몰 키 생성 완료.
+[ELXGB] Building Ensemble Tree 1/6 via HENS (Paillier Homomorphic Encryption)...
+  [COMM] Active -> Passive Broadcast (enc_g, enc_h): 11998.88 KB (Time excluded from Pure Train)
 current tree depth: 0
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.33 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (Node Histograms): 21.80 KB
+    [COMM] Party_2 -> Active (Node Histograms): 83.32 KB
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 2/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 [ELXGB] Building Ensemble Tree 3/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 4/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+current tree depth: 3
+current tree depth: 3
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 5/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 [ELXGB] Building Ensemble Tree 6/6 via DPNS (IBM Differential Privacy)...
+  [COMM] Active -> Passive Broadcast (noisy_g, noisy_h): 750.00 KB
 current tree depth: 0
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
-current tree depth: 3
-current tree depth: 4
-current tree depth: 4
-current tree depth: 3
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
+current tree depth: 3
+current tree depth: 3
 current tree depth: 1
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 2
+    [COMM] Party_1 -> Active (DP Best Meta-Split): 80 Bytes
+    [COMM] Party_2 -> Active (DP Best Meta-Split): 80 Bytes
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
 current tree depth: 3
-current tree depth: 4
-current tree depth: 4
- -> ELXGB Train: 0.8217 | Test: 0.8203
+
+==================================================
+[ELXGB] Training Completed. Total Trees: 6
+ - Pure Compute Time (Excluding Pre-Encryption): 590.9408 seconds
+ - Total Comm. Volume: 16.1088 MB
+==================================================
+
+ -> ELXGB Train: 0.8220 | Test: 0.8192
 ----------------------------------------------------------------------
-XGB Lib              Test: 0.8187
-Plaintext            Test: 0.8197
-ELXGB                Test: 0.8203
+XGB Lib              Test: 0.8198
+Plaintext            Test: 0.8198
+ELXGB                Test: 0.8192
 ----------------------------------------------------------------------

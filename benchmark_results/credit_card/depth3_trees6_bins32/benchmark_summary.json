@@ -1,0 +1,32 @@
+{
+    "config": {
+        "dataset": "credit_card",
+        "n_estimators": 6,
+        "max_depth": 3,
+        "bins": 32,
+        "eps": 0.03125,
+        "learning_rate": 1.0,
+        "dp_epsilon": 10.0,
+        "num_parties": 2,
+        "train_samples": 24000,
+        "test_samples": 6000,
+        "features": 23
+    },
+    "results": {
+        "xgboost_library": {
+            "train_acc": 0.822,
+            "test_acc": 0.8198333333333333
+        },
+        "plaintext_xgboost": {
+            "train_acc": 0.8221666666666667,
+            "test_acc": 0.8198333333333333
+        },
+        "elxgb": {
+            "train_acc": 0.822,
+            "test_acc": 0.8191666666666667,
+            "pure_train_time_sec": 590.940833568573,
+            "total_comm_bytes": 16891319.0,
+            "total_comm_mb": 16.108817100524902
+        }
+    }
+}

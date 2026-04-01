@@ -1,0 +1,1505 @@
+[
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "V12",
+        "split_condition": 481.0,
+        "party": "Party_2",
+        "record_id": "0befc6bc-1496-4869-9c49-c4e808996a41",
+        "gain": 896.1121641248537,
+        "yes": 1,
+        "no": 16,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "V12",
+                "split_condition": 679.0,
+                "party": "Party_2",
+                "record_id": "7eb155d7-5564-41d2-bee0-a99569a79f4c",
+                "gain": 115.17527601251216,
+                "yes": 2,
+                "no": 9,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "V15",
+                        "split_condition": 1.0,
+                        "party": "Party_2",
+                        "record_id": "c8e04e9f-8c2b-408d-b535-1210296d137b",
+                        "gain": 28.19733279112279,
+                        "yes": 3,
+                        "no": 6,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "depth": 3,
+                                "split": "V9",
+                                "split_condition": 1.0,
+                                "party": "Party_2",
+                                "record_id": "e36c8b0b-c83f-4838-81ff-25f494cd5039",
+                                "gain": 17.761402801375993,
+                                "yes": 4,
+                                "no": 5,
+                                "children": [
+                                    {
+                                        "nodeid": 4,
+                                        "leaf": -0.7428571428571429
+                                    },
+                                    {
+                                        "nodeid": 5,
+                                        "leaf": -1.3245997088791848
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 6,
+                                "depth": 3,
+                                "split": "V16",
+                                "split_condition": 2.0,
+                                "party": "Party_2",
+                                "record_id": "cec2ef5e-3747-498d-91dd-688876a788f2",
+                                "gain": 32.978504995271486,
+                                "yes": 7,
+                                "no": 8,
+                                "children": [
+                                    {
+                                        "nodeid": 7,
+                                        "leaf": 1.1379310344827587
+                                    },
+                                    {
+                                        "nodeid": 8,
+                                        "leaf": -0.617737003058104
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 895.0,
+                        "party": "Party_2",
+                        "record_id": "e55fc2d8-e314-45f8-a1a8-437b7193e0e9",
+                        "gain": 23.53133686976183,
+                        "yes": 10,
+                        "no": 13,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "depth": 3,
+                                "split": "V9",
+                                "split_condition": 1.0,
+                                "party": "Party_2",
+                                "record_id": "05106937-789e-4f99-975b-4757c6806760",
+                                "gain": 14.513873010589734,
+                                "yes": 11,
+                                "no": 12,
+                                "children": [
+                                    {
+                                        "nodeid": 11,
+                                        "leaf": 0.023166023166023165
+                                    },
+                                    {
+                                        "nodeid": 12,
+                                        "leaf": -0.6629834254143646
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 13,
+                                "depth": 3,
+                                "split": "V9",
+                                "split_condition": 1.0,
+                                "party": "Party_2",
+                                "record_id": "e146af09-5870-4d1f-9f3e-a7219cd53a19",
+                                "gain": 6.065941222288583,
+                                "yes": 14,
+                                "no": 15,
+                                "children": [
+                                    {
+                                        "nodeid": 14,
+                                        "leaf": 0.08831168831168831
+                                    },
+                                    {
+                                        "nodeid": 15,
+                                        "leaf": 0.5271523178807948
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 16,
+                "depth": 1,
+                "split": "V15",
+                "split_condition": 1.0,
+                "party": "Party_2",
+                "record_id": "5c3a91f1-bdf1-4ac7-a1c5-079de91faed8",
+                "gain": 190.8960072474165,
+                "yes": 17,
+                "no": 24,
+                "children": [
+                    {
+                        "nodeid": 17,
+                        "depth": 2,
+                        "split": "V1",
+                        "split_condition": 60.0,
+                        "party": "Party_1",
+                        "record_id": "12e1ca96-8ba7-41f8-9b17-7b964a6d9ca3",
+                        "gain": 63.5246399156822,
+                        "yes": 18,
+                        "no": 21,
+                        "children": [
+                            {
+                                "nodeid": 18,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 205.0,
+                                "party": "Party_2",
+                                "record_id": "1a760bc6-d0cc-4a98-b543-dcfee39dadfc",
+                                "gain": 40.03755076498419,
+                                "yes": 19,
+                                "no": 20,
+                                "children": [
+                                    {
+                                        "nodeid": 19,
+                                        "leaf": -1.9186332350049164
+                                    },
+                                    {
+                                        "nodeid": 20,
+                                        "leaf": -1.6761839238619425
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 21,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 205.0,
+                                "party": "Party_2",
+                                "record_id": "429802fb-0e2d-4e7a-a21f-4d6fe845f106",
+                                "gain": 35.4886393901823,
+                                "yes": 22,
+                                "no": 23,
+                                "children": [
+                                    {
+                                        "nodeid": 22,
+                                        "leaf": -1.5137254901960784
+                                    },
+                                    {
+                                        "nodeid": 23,
+                                        "leaf": -0.3333333333333333
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 24,
+                        "depth": 2,
+                        "split": "V16",
+                        "split_condition": 2.0,
+                        "party": "Party_2",
+                        "record_id": "83d02874-fe16-471a-bb90-939dc4fb003c",
+                        "gain": 429.05176396497905,
+                        "yes": 25,
+                        "no": 28,
+                        "children": [
+                            {
+                                "nodeid": 25,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 148.0,
+                                "party": "Party_2",
+                                "record_id": "d21c5ddc-53f3-44f6-99f6-d19e59624729",
+                                "gain": 78.76009066827862,
+                                "yes": 26,
+                                "no": 27,
+                                "children": [
+                                    {
+                                        "nodeid": 26,
+                                        "leaf": 0.8771021992238034
+                                    },
+                                    {
+                                        "nodeid": 27,
+                                        "leaf": -0.9672131147540983
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 28,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 180.0,
+                                "party": "Party_2",
+                                "record_id": "00b87ac1-1f20-466c-870a-09c412ea094e",
+                                "gain": 49.61635275379399,
+                                "yes": 29,
+                                "no": 30,
+                                "children": [
+                                    {
+                                        "nodeid": 29,
+                                        "leaf": -1.2540067994171928
+                                    },
+                                    {
+                                        "nodeid": 30,
+                                        "leaf": -1.8423932871214885
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "V12",
+        "split_condition": 192.0,
+        "party": "Party_2",
+        "record_id": "a8ceaa4c-2b08-4cbe-95f8-fe5ffa0c3e34",
+        "gain": 167.4836272487447,
+        "yes": 1,
+        "no": 16,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "V1",
+                "split_condition": 27.0,
+                "party": "Party_1",
+                "record_id": "9303d64c-a6fc-4cf0-a1f3-b193e483c673",
+                "gain": 410.02503596784925,
+                "yes": 2,
+                "no": 9,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 76.0,
+                        "party": "Party_2",
+                        "record_id": "8a0f2c47-0465-422c-bd14-c07eedf4651d",
+                        "gain": 1338.03281747558,
+                        "yes": 3,
+                        "no": 6,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "depth": 3,
+                                "split": "V6",
+                                "split_condition": 7578.78125,
+                                "party": "Party_1",
+                                "record_id": "33578711-4006-4675-a449-30e844e14848",
+                                "gain": 4752.226596887873,
+                                "yes": 4,
+                                "no": 5,
+                                "children": [
+                                    {
+                                        "nodeid": 4,
+                                        "leaf": -1.0704292811256515
+                                    },
+                                    {
+                                        "nodeid": 5,
+                                        "leaf": -0.11515923811465054
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 6,
+                                "depth": 3,
+                                "split": "V6",
+                                "split_condition": 280.0,
+                                "party": "Party_1",
+                                "record_id": "3079590a-99c4-43ee-bd2f-6c55fed58093",
+                                "gain": 1882.26440893634,
+                                "yes": 7,
+                                "no": 8,
+                                "children": [
+                                    {
+                                        "nodeid": 7,
+                                        "leaf": -0.07816117852589176
+                                    },
+                                    {
+                                        "nodeid": 8,
+                                        "leaf": -0.16611134770080374
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "V2",
+                        "split_condition": 9.0,
+                        "party": "Party_1",
+                        "record_id": "f27f5353-1664-44f9-87bd-19287bb80314",
+                        "gain": 337.0486824306581,
+                        "yes": 10,
+                        "no": 13,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "depth": 3,
+                                "split": "V10",
+                                "split_condition": 18.0,
+                                "party": "Party_2",
+                                "record_id": "126bd540-20cd-4794-a8d5-62db03a44fef",
+                                "gain": 16500.032600263556,
+                                "yes": 11,
+                                "no": 12,
+                                "children": [
+                                    {
+                                        "nodeid": 11,
+                                        "leaf": -0.8373833699358482
+                                    },
+                                    {
+                                        "nodeid": 12,
+                                        "leaf": -0.9837939835184208
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 13,
+                                "depth": 3,
+                                "split": "V6",
+                                "split_condition": -319.0,
+                                "party": "Party_1",
+                                "record_id": "dcb0b201-0425-4423-81f9-523d203b7d76",
+                                "gain": 170.5285461362912,
+                                "yes": 14,
+                                "no": 15,
+                                "children": [
+                                    {
+                                        "nodeid": 14,
+                                        "leaf": -1.1061905049053913
+                                    },
+                                    {
+                                        "nodeid": 15,
+                                        "leaf": -0.9198236554476211
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 16,
+                "depth": 1,
+                "split": "V11",
+                "split_condition": 1.0,
+                "party": "Party_2",
+                "record_id": "fc76f95b-f0fd-41b4-bcc4-83f8b33f4dbe",
+                "gain": 94.89143673363174,
+                "yes": 17,
+                "no": 24,
+                "children": [
+                    {
+                        "nodeid": 17,
+                        "depth": 2,
+                        "split": "V13",
+                        "split_condition": 4.0,
+                        "party": "Party_2",
+                        "record_id": "ec775d02-08d1-42f1-9a52-683ebc1f9c35",
+                        "gain": 527.7715258476064,
+                        "yes": 18,
+                        "no": 21,
+                        "children": [
+                            {
+                                "nodeid": 18,
+                                "depth": 3,
+                                "split": "V1",
+                                "split_condition": 26.0,
+                                "party": "Party_1",
+                                "record_id": "be2c7774-0d3b-43a1-bb18-b01e230e1f9b",
+                                "gain": 10089.612795862662,
+                                "yes": 19,
+                                "no": 20,
+                                "children": [
+                                    {
+                                        "nodeid": 19,
+                                        "leaf": 0.3224104286206278
+                                    },
+                                    {
+                                        "nodeid": 20,
+                                        "leaf": 0.20728329371795554
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 21,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 895.0,
+                                "party": "Party_2",
+                                "record_id": "4f6b2a28-81e6-404b-a65c-b72e490d385f",
+                                "gain": 1188.3558528440374,
+                                "yes": 22,
+                                "no": 23,
+                                "children": [
+                                    {
+                                        "nodeid": 22,
+                                        "leaf": 0.14475398833734912
+                                    },
+                                    {
+                                        "nodeid": 23,
+                                        "leaf": -0.10197015119701877
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 24,
+                        "depth": 2,
+                        "split": "V6",
+                        "split_condition": 2437.0,
+                        "party": "Party_1",
+                        "record_id": "02b9da8a-1fab-4288-8aa1-7a3f25f04895",
+                        "gain": 90.81173800549782,
+                        "yes": 25,
+                        "no": 28,
+                        "children": [
+                            {
+                                "nodeid": 25,
+                                "depth": 3,
+                                "split": "V1",
+                                "split_condition": 26.0,
+                                "party": "Party_1",
+                                "record_id": "1d591d4a-db55-4441-9e81-1be1b9d1cc23",
+                                "gain": 35.14896948245254,
+                                "yes": 26,
+                                "no": 27,
+                                "children": [
+                                    {
+                                        "nodeid": 26,
+                                        "leaf": 0.44034313026700295
+                                    },
+                                    {
+                                        "nodeid": 27,
+                                        "leaf": -0.4081204508826118
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 28,
+                                "depth": 3,
+                                "split": "V15",
+                                "split_condition": 5.0,
+                                "party": "Party_2",
+                                "record_id": "b0616653-ee66-4177-82f3-649c5b18fc82",
+                                "gain": 1511.3105288789084,
+                                "yes": 29,
+                                "no": 30,
+                                "children": [
+                                    {
+                                        "nodeid": 29,
+                                        "leaf": 0.7069072137722939
+                                    },
+                                    {
+                                        "nodeid": 30,
+                                        "leaf": -0.07431453939627072
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "V15",
+        "split_condition": 1.0,
+        "party": "Party_2",
+        "record_id": "c35efd49-9baa-47e4-9f83-f65486f89c4e",
+        "gain": 342.74046537124985,
+        "yes": 1,
+        "no": 16,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "V12",
+                "split_condition": 56.0,
+                "party": "Party_2",
+                "record_id": "aeffe4a2-11dd-4ae4-88b1-136bcf57402a",
+                "gain": 303.4884902719389,
+                "yes": 2,
+                "no": 9,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 347.0,
+                        "party": "Party_2",
+                        "record_id": "938d4b03-e780-4458-88ae-a8967505239c",
+                        "gain": 148.74771543311584,
+                        "yes": 3,
+                        "no": 6,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "depth": 3,
+                                "split": "V3",
+                                "split_condition": 1.0,
+                                "party": "Party_1",
+                                "record_id": "295eb0d2-d67d-4e50-a7b0-47c0630ac3ff",
+                                "gain": 257.3867837965103,
+                                "yes": 4,
+                                "no": 5,
+                                "children": [
+                                    {
+                                        "nodeid": 4,
+                                        "leaf": -0.5181175207641927
+                                    },
+                                    {
+                                        "nodeid": 5,
+                                        "leaf": -0.5475440631648639
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 6,
+                                "depth": 3,
+                                "split": "V1",
+                                "split_condition": 26.0,
+                                "party": "Party_1",
+                                "record_id": "fc761770-6212-4c4c-ab0b-1bd6a1152928",
+                                "gain": 182.6947466667992,
+                                "yes": 7,
+                                "no": 8,
+                                "children": [
+                                    {
+                                        "nodeid": 7,
+                                        "leaf": 0.1878458358066831
+                                    },
+                                    {
+                                        "nodeid": 8,
+                                        "leaf": 0.1622576846206481
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "V2",
+                        "split_condition": 8.0,
+                        "party": "Party_1",
+                        "record_id": "deb34990-17d0-4132-b29a-04fca6d192b8",
+                        "gain": 1220.2097664977202,
+                        "yes": 10,
+                        "no": 13,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "depth": 3,
+                                "split": "V10",
+                                "split_condition": 11.0,
+                                "party": "Party_2",
+                                "record_id": "7c1a4a43-abfd-464a-9510-d958746d1071",
+                                "gain": 813184.2570006435,
+                                "yes": 11,
+                                "no": 12,
+                                "children": [
+                                    {
+                                        "nodeid": 11,
+                                        "leaf": -0.9899541597828986
+                                    },
+                                    {
+                                        "nodeid": 12,
+                                        "leaf": -1.0239267059891883
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 13,
+                                "depth": 3,
+                                "split": "V2",
+                                "split_condition": 10.0,
+                                "party": "Party_1",
+                                "record_id": "4aa99451-0786-401c-b07b-9585d00c73a5",
+                                "gain": 56.67812595425431,
+                                "yes": 14,
+                                "no": 15,
+                                "children": [
+                                    {
+                                        "nodeid": 14,
+                                        "leaf": -0.9853076927250561
+                                    },
+                                    {
+                                        "nodeid": 15,
+                                        "leaf": -0.7544523148789052
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 16,
+                "depth": 1,
+                "split": "V6",
+                "split_condition": 70.0,
+                "party": "Party_1",
+                "record_id": "2fb22a7c-2faa-4055-8e08-7ef9247c731e",
+                "gain": 7833.579981626238,
+                "yes": 17,
+                "no": 22,
+                "children": [
+                    {
+                        "nodeid": 17,
+                        "depth": 2,
+                        "split": "V6",
+                        "split_condition": 70.0,
+                        "party": "Party_1",
+                        "record_id": "390f2db4-61d7-49e6-9fd9-2d0d0f7d0bb2",
+                        "gain": 1.0913936421275139e-11,
+                        "yes": 18,
+                        "no": 19,
+                        "children": [
+                            {
+                                "nodeid": 18,
+                                "leaf": -0.0
+                            },
+                            {
+                                "nodeid": 19,
+                                "depth": 3,
+                                "split": "V6",
+                                "split_condition": 70.0,
+                                "party": "Party_1",
+                                "record_id": "a77982cb-06c2-4303-a8cb-65a4475f9f4f",
+                                "gain": 1.0913936421275139e-11,
+                                "yes": 20,
+                                "no": 21,
+                                "children": [
+                                    {
+                                        "nodeid": 20,
+                                        "leaf": -0.0
+                                    },
+                                    {
+                                        "nodeid": 21,
+                                        "leaf": -0.08761589985335325
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 22,
+                        "depth": 2,
+                        "split": "V10",
+                        "split_condition": 30.0,
+                        "party": "Party_2",
+                        "record_id": "8c5e89c0-8cf3-4924-bb4a-9884d55adcc7",
+                        "gain": 191.96594390466066,
+                        "yes": 23,
+                        "no": 26,
+                        "children": [
+                            {
+                                "nodeid": 23,
+                                "depth": 3,
+                                "split": "V1",
+                                "split_condition": 60.0,
+                                "party": "Party_1",
+                                "record_id": "f8481df4-f65b-4a6d-8a5b-97948fcda687",
+                                "gain": 140.4075690544181,
+                                "yes": 24,
+                                "no": 25,
+                                "children": [
+                                    {
+                                        "nodeid": 24,
+                                        "leaf": 0.10180223015137878
+                                    },
+                                    {
+                                        "nodeid": 25,
+                                        "leaf": 0.886919071080946
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 26,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 22.0,
+                                "party": "Party_2",
+                                "record_id": "96672dea-765f-4077-b576-93aef21e960b",
+                                "gain": 1118.7978513349406,
+                                "yes": 27,
+                                "no": 28,
+                                "children": [
+                                    {
+                                        "nodeid": 27,
+                                        "leaf": 0.4706127775182606
+                                    },
+                                    {
+                                        "nodeid": 28,
+                                        "leaf": -0.15261965527145654
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "V12",
+        "split_condition": 180.0,
+        "party": "Party_2",
+        "record_id": "0411238a-404e-4234-98bb-250f5c8a1317",
+        "gain": 1812.494278840814,
+        "yes": 1,
+        "no": 16,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "V10",
+                "split_condition": 25.0,
+                "party": "Party_2",
+                "record_id": "1baf5b1c-1b9d-4a40-8cf2-0fd7b882a154",
+                "gain": 1967.9622893404514,
+                "yes": 2,
+                "no": 9,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "V10",
+                        "split_condition": 2.0,
+                        "party": "Party_2",
+                        "record_id": "ea8876f7-4a3d-424f-b975-3cc96b9d0f7b",
+                        "gain": 42603.62620094813,
+                        "yes": 3,
+                        "no": 6,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 180.0,
+                                "party": "Party_2",
+                                "record_id": "d221e9df-1770-4bd8-984b-9dc0c6b3579c",
+                                "gain": 2.2773747332394123e-09,
+                                "yes": 4,
+                                "no": 5,
+                                "children": [
+                                    {
+                                        "nodeid": 4,
+                                        "leaf": -0.2903738993272118
+                                    },
+                                    {
+                                        "nodeid": 5,
+                                        "leaf": -0.0
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 6,
+                                "depth": 3,
+                                "split": "V1",
+                                "split_condition": 31.0,
+                                "party": "Party_1",
+                                "record_id": "73c8f262-22ff-457e-9eca-cda35e7f7dfb",
+                                "gain": 1977.6621397785398,
+                                "yes": 7,
+                                "no": 8,
+                                "children": [
+                                    {
+                                        "nodeid": 7,
+                                        "leaf": 0.6197632967376161
+                                    },
+                                    {
+                                        "nodeid": 8,
+                                        "leaf": 0.3820458627316195
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "V6",
+                        "split_condition": 0.0,
+                        "party": "Party_1",
+                        "record_id": "ad2eaade-0528-467a-a75f-22c85b9403f0",
+                        "gain": 3314.2758742862934,
+                        "yes": 10,
+                        "no": 13,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "depth": 3,
+                                "split": "V15",
+                                "split_condition": 1.0,
+                                "party": "Party_2",
+                                "record_id": "d3df2ef2-c196-4e83-a3d6-b0a63b41bdba",
+                                "gain": 41282.24739916739,
+                                "yes": 11,
+                                "no": 12,
+                                "children": [
+                                    {
+                                        "nodeid": 11,
+                                        "leaf": -0.5864565567383287
+                                    },
+                                    {
+                                        "nodeid": 12,
+                                        "leaf": -0.9518443502780568
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 13,
+                                "depth": 3,
+                                "split": "V15",
+                                "split_condition": 3.0,
+                                "party": "Party_2",
+                                "record_id": "95a6e32b-ca9d-4366-822a-09a2dee32b5e",
+                                "gain": 3957.4085982150286,
+                                "yes": 14,
+                                "no": 15,
+                                "children": [
+                                    {
+                                        "nodeid": 14,
+                                        "leaf": -0.32772551427260427
+                                    },
+                                    {
+                                        "nodeid": 15,
+                                        "leaf": -0.34040568845947916
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 16,
+                "depth": 1,
+                "split": "V6",
+                "split_condition": 0.0,
+                "party": "Party_1",
+                "record_id": "94fa9fb8-5445-4867-b5b0-600e89a7c324",
+                "gain": 1643.597122613631,
+                "yes": 17,
+                "no": 22,
+                "children": [
+                    {
+                        "nodeid": 17,
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 192.0,
+                        "party": "Party_2",
+                        "record_id": "bbc5de63-ba2b-4b75-88ed-f5464205bb93",
+                        "gain": 152095.92062775383,
+                        "yes": 18,
+                        "no": 19,
+                        "children": [
+                            {
+                                "nodeid": 18,
+                                "leaf": -0.4477676835356238
+                            },
+                            {
+                                "nodeid": 19,
+                                "depth": 3,
+                                "split": "V1",
+                                "split_condition": 29.0,
+                                "party": "Party_1",
+                                "record_id": "d555bfcf-4472-430c-a0e8-09b9e6d0edcc",
+                                "gain": 545.4995581615797,
+                                "yes": 20,
+                                "no": 21,
+                                "children": [
+                                    {
+                                        "nodeid": 20,
+                                        "leaf": -0.3410131258651755
+                                    },
+                                    {
+                                        "nodeid": 21,
+                                        "leaf": -0.7720532024378468
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 22,
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 293.0,
+                        "party": "Party_2",
+                        "record_id": "93790a83-ab86-479d-a190-791f7fbd814f",
+                        "gain": 136.94762127934308,
+                        "yes": 23,
+                        "no": 26,
+                        "children": [
+                            {
+                                "nodeid": 23,
+                                "depth": 3,
+                                "split": "V10",
+                                "split_condition": 8.0,
+                                "party": "Party_2",
+                                "record_id": "1a00b39a-1e5b-47b8-83fe-3928552579c5",
+                                "gain": 403.2559255000168,
+                                "yes": 24,
+                                "no": 25,
+                                "children": [
+                                    {
+                                        "nodeid": 24,
+                                        "leaf": 0.0731532997013638
+                                    },
+                                    {
+                                        "nodeid": 25,
+                                        "leaf": -0.1140481770681084
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 26,
+                                "depth": 3,
+                                "split": "V6",
+                                "split_condition": 7578.78125,
+                                "party": "Party_1",
+                                "record_id": "916396ff-415f-45f8-a79f-bd5ddb9b3fba",
+                                "gain": 131.4343345067998,
+                                "yes": 27,
+                                "no": 28,
+                                "children": [
+                                    {
+                                        "nodeid": 27,
+                                        "leaf": -0.19342186113214374
+                                    },
+                                    {
+                                        "nodeid": 28,
+                                        "leaf": 0.08223065128668852
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "V9",
+        "split_condition": 1.0,
+        "party": "Party_2",
+        "record_id": "d4b67159-9eb6-41ac-9e1f-679526138d49",
+        "gain": 285.8203208817714,
+        "yes": 1,
+        "no": 16,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "V16",
+                "split_condition": 1.0,
+                "party": "Party_2",
+                "record_id": "277f7d90-9f56-4c9f-87fd-306fe2ccf530",
+                "gain": 432.55875439052,
+                "yes": 2,
+                "no": 9,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "V2",
+                        "split_condition": 10.0,
+                        "party": "Party_1",
+                        "record_id": "95b68c28-3f63-4236-ad2b-6d6d904dad3d",
+                        "gain": 239.19982436802923,
+                        "yes": 3,
+                        "no": 6,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 22.0,
+                                "party": "Party_2",
+                                "record_id": "5717b4d1-fe26-4e7d-91ba-b0cb6ea52bf1",
+                                "gain": 472.3271075318694,
+                                "yes": 4,
+                                "no": 5,
+                                "children": [
+                                    {
+                                        "nodeid": 4,
+                                        "leaf": -0.9143891505955551
+                                    },
+                                    {
+                                        "nodeid": 5,
+                                        "leaf": -0.4490263928097507
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 6,
+                                "depth": 3,
+                                "split": "V13",
+                                "split_condition": 4.0,
+                                "party": "Party_2",
+                                "record_id": "4729fbf7-4138-463b-9ac8-44eb376693ba",
+                                "gain": 827908.6798429231,
+                                "yes": 7,
+                                "no": 8,
+                                "children": [
+                                    {
+                                        "nodeid": 7,
+                                        "leaf": -0.34837209893458815
+                                    },
+                                    {
+                                        "nodeid": 8,
+                                        "leaf": -0.7489587078177927
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "V1",
+                        "split_condition": 60.0,
+                        "party": "Party_1",
+                        "record_id": "6215d4a3-06d2-469f-8f6e-7226670ab339",
+                        "gain": 8116.837583720026,
+                        "yes": 10,
+                        "no": 13,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "depth": 3,
+                                "split": "V2",
+                                "split_condition": 4.0,
+                                "party": "Party_1",
+                                "record_id": "c80f551b-d81b-4baf-9f7e-320e2184002b",
+                                "gain": 6212.800304584889,
+                                "yes": 11,
+                                "no": 12,
+                                "children": [
+                                    {
+                                        "nodeid": 11,
+                                        "leaf": -0.12222880155688229
+                                    },
+                                    {
+                                        "nodeid": 12,
+                                        "leaf": -0.1349560814016403
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 13,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 158.0,
+                                "party": "Party_2",
+                                "record_id": "630609fc-14f2-4865-a35c-0ba86282e92d",
+                                "gain": 17254.775213712583,
+                                "yes": 14,
+                                "no": 15,
+                                "children": [
+                                    {
+                                        "nodeid": 14,
+                                        "leaf": -0.4732986778444375
+                                    },
+                                    {
+                                        "nodeid": 15,
+                                        "leaf": -0.14434202328168635
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 16,
+                "depth": 1,
+                "split": "V13",
+                "split_condition": 6.0,
+                "party": "Party_2",
+                "record_id": "5e941438-c660-4bce-a757-067b9fe2a0cb",
+                "gain": 242.66834677035533,
+                "yes": 17,
+                "no": 24,
+                "children": [
+                    {
+                        "nodeid": 17,
+                        "depth": 2,
+                        "split": "V1",
+                        "split_condition": 35.0,
+                        "party": "Party_1",
+                        "record_id": "4e9ac5f6-6cda-43cf-9152-eb3f42a5a28a",
+                        "gain": 609.5872237972791,
+                        "yes": 18,
+                        "no": 21,
+                        "children": [
+                            {
+                                "nodeid": 18,
+                                "depth": 3,
+                                "split": "V14",
+                                "split_condition": 347.78125,
+                                "party": "Party_2",
+                                "record_id": "c6219477-89e3-4490-b2ef-16efb2840710",
+                                "gain": 18370.227517503994,
+                                "yes": 19,
+                                "no": 20,
+                                "children": [
+                                    {
+                                        "nodeid": 19,
+                                        "leaf": -0.1625848315542214
+                                    },
+                                    {
+                                        "nodeid": 20,
+                                        "leaf": 0.15508194462077576
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 21,
+                                "depth": 3,
+                                "split": "V11",
+                                "split_condition": 3.0,
+                                "party": "Party_2",
+                                "record_id": "fe19a5d1-0c2c-4b34-9057-200b44d90426",
+                                "gain": 895.5084056987965,
+                                "yes": 22,
+                                "no": 23,
+                                "children": [
+                                    {
+                                        "nodeid": 22,
+                                        "leaf": -0.21410586120417177
+                                    },
+                                    {
+                                        "nodeid": 23,
+                                        "leaf": -0.4965059503931548
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 24,
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 192.0,
+                        "party": "Party_2",
+                        "record_id": "12c72df0-063e-4b9e-9e27-c23c2848238e",
+                        "gain": 348.3600037264278,
+                        "yes": 25,
+                        "no": 28,
+                        "children": [
+                            {
+                                "nodeid": 25,
+                                "depth": 3,
+                                "split": "V15",
+                                "split_condition": 1.0,
+                                "party": "Party_2",
+                                "record_id": "18315c7c-3434-4978-9a5d-9ec2accb68d4",
+                                "gain": 86614.48135426601,
+                                "yes": 26,
+                                "no": 27,
+                                "children": [
+                                    {
+                                        "nodeid": 26,
+                                        "leaf": 0.18283316643886705
+                                    },
+                                    {
+                                        "nodeid": 27,
+                                        "leaf": 0.43386131455065613
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 28,
+                                "depth": 3,
+                                "split": "V6",
+                                "split_condition": -98.0,
+                                "party": "Party_1",
+                                "record_id": "ebe65adf-30a5-4d53-b82e-c24a8e6c77f1",
+                                "gain": 579.6745584829445,
+                                "yes": 29,
+                                "no": 30,
+                                "children": [
+                                    {
+                                        "nodeid": 29,
+                                        "leaf": 0.15818945032705006
+                                    },
+                                    {
+                                        "nodeid": 30,
+                                        "leaf": 0.1849341527296061
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "nodeid": 0,
+        "depth": 0,
+        "split": "V11",
+        "split_condition": 3.0,
+        "party": "Party_2",
+        "record_id": "56aca6f0-2292-462e-b1b7-ed9032de9be7",
+        "gain": 240.97785657101753,
+        "yes": 1,
+        "no": 16,
+        "children": [
+            {
+                "nodeid": 1,
+                "depth": 1,
+                "split": "V10",
+                "split_condition": 30.0,
+                "party": "Party_2",
+                "record_id": "f83180bb-711f-4c8d-b6d7-0a0ea624d804",
+                "gain": 622.9128933913237,
+                "yes": 2,
+                "no": 9,
+                "children": [
+                    {
+                        "nodeid": 2,
+                        "depth": 2,
+                        "split": "V12",
+                        "split_condition": 138.0,
+                        "party": "Party_2",
+                        "record_id": "00af4e9c-0e27-4aca-9aed-7c3f2ff1ce6f",
+                        "gain": 97.81098980426276,
+                        "yes": 3,
+                        "no": 6,
+                        "children": [
+                            {
+                                "nodeid": 3,
+                                "depth": 3,
+                                "split": "V6",
+                                "split_condition": 1429.0,
+                                "party": "Party_1",
+                                "record_id": "789d4996-6421-41e7-94e7-500b979ff294",
+                                "gain": 488.91977968679686,
+                                "yes": 4,
+                                "no": 5,
+                                "children": [
+                                    {
+                                        "nodeid": 4,
+                                        "leaf": -0.4890726712922802
+                                    },
+                                    {
+                                        "nodeid": 5,
+                                        "leaf": -0.19593604362319378
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 6,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 318.0,
+                                "party": "Party_2",
+                                "record_id": "2b5330e5-5c86-4278-8719-ccd019877ce6",
+                                "gain": 108.08410852164957,
+                                "yes": 7,
+                                "no": 8,
+                                "children": [
+                                    {
+                                        "nodeid": 7,
+                                        "leaf": -0.013310593239650411
+                                    },
+                                    {
+                                        "nodeid": 8,
+                                        "leaf": 0.024195951953571083
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 9,
+                        "depth": 2,
+                        "split": "V14",
+                        "split_condition": 167.0,
+                        "party": "Party_2",
+                        "record_id": "37e2e24c-5e3f-478b-8584-e6c866172831",
+                        "gain": 49172.50768133121,
+                        "yes": 10,
+                        "no": 13,
+                        "children": [
+                            {
+                                "nodeid": 10,
+                                "depth": 3,
+                                "split": "V6",
+                                "split_condition": 1062.0,
+                                "party": "Party_1",
+                                "record_id": "a4df87ac-15d2-469f-916c-abce67e2f592",
+                                "gain": 133.68101810959388,
+                                "yes": 11,
+                                "no": 12,
+                                "children": [
+                                    {
+                                        "nodeid": 11,
+                                        "leaf": -0.9226700432297196
+                                    },
+                                    {
+                                        "nodeid": 12,
+                                        "leaf": 0.20115910988410657
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 13,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 895.0,
+                                "party": "Party_2",
+                                "record_id": "97e7ba07-b36a-4a00-ab88-6fb2de3f6adb",
+                                "gain": 21077.19404081496,
+                                "yes": 14,
+                                "no": 15,
+                                "children": [
+                                    {
+                                        "nodeid": 14,
+                                        "leaf": 0.846258613202021
+                                    },
+                                    {
+                                        "nodeid": 15,
+                                        "leaf": -0.21736557999677178
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "nodeid": 16,
+                "depth": 1,
+                "split": "V1",
+                "split_condition": 50.0,
+                "party": "Party_1",
+                "record_id": "29e2c2cd-0607-4640-a402-3320a50ff32b",
+                "gain": 3679.006025263739,
+                "yes": 17,
+                "no": 24,
+                "children": [
+                    {
+                        "nodeid": 17,
+                        "depth": 2,
+                        "split": "V6",
+                        "split_condition": 2997.125,
+                        "party": "Party_1",
+                        "record_id": "98e7ea94-a1c9-4e52-8bef-1df63f64ea1e",
+                        "gain": 1587.6963070413797,
+                        "yes": 18,
+                        "no": 21,
+                        "children": [
+                            {
+                                "nodeid": 18,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 192.0,
+                                "party": "Party_2",
+                                "record_id": "dd9c26fa-1bc1-4d8c-809b-3284b7a3d83a",
+                                "gain": 410.50369897758065,
+                                "yes": 19,
+                                "no": 20,
+                                "children": [
+                                    {
+                                        "nodeid": 19,
+                                        "leaf": -0.01178954460919617
+                                    },
+                                    {
+                                        "nodeid": 20,
+                                        "leaf": -0.01017254638664271
+                                    }
+                                ]
+                            },
+                            {
+                                "nodeid": 21,
+                                "depth": 3,
+                                "split": "V12",
+                                "split_condition": 56.0,
+                                "party": "Party_2",
+                                "record_id": "13766886-e8ff-4a02-8b10-50e82be23398",
+                                "gain": 11090.344694436082,
+                                "yes": 22,
+                                "no": 23,
+                                "children": [
+                                    {
+                                        "nodeid": 22,
+                                        "leaf": -0.54517016644898
+                                    },
+                                    {
+                                        "nodeid": 23,
+                                        "leaf": 0.12855779326619943
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "nodeid": 24,
+                        "depth": 2,
+                        "split": "V6",
+                        "split_condition": -319.0,
+                        "party": "Party_1",
+                        "record_id": "6d88583c-5d2e-4b2d-a560-e9a57c5b6a20",
+                        "gain": 19039.37808898526,
+                        "yes": 25,
+                        "no": 26,
+                        "children": [
+                            {
+                                "nodeid": 25,
+                                "leaf": 0.17640373924166475
+                            },
+                            {
+                                "nodeid": 26,
+                                "depth": 3,
+                                "split": "V2",
+                                "split_condition": 8.0,
+                                "party": "Party_1",
+                                "record_id": "940730fa-9efc-4a44-aec0-34c0ea5ae14e",
+                                "gain": 87.69515484103475,
+                                "yes": 27,
+                                "no": 28,
+                                "children": [
+                                    {
+                                        "nodeid": 27,
+                                        "leaf": -0.16698087123022845
+                                    },
+                                    {
+                                        "nodeid": 28,
+                                        "leaf": -0.11357484598211909
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

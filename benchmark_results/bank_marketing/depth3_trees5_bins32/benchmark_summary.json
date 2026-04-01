@@ -1,8 +1,8 @@
 {
     "config": {
         "dataset": "bank_marketing",
-        "n_estimators": 2,
-        "max_depth": 4,
+        "n_estimators": 5,
+        "max_depth": 3,
         "bins": 32,
         "eps": 0.03125,
         "learning_rate": 1.0,
@@ -14,19 +14,19 @@
     },
     "results": {
         "xgboost_library": {
-            "train_acc": 0.8992203052422031,
-            "test_acc": 0.8938405396439235
+            "train_acc": 0.9023169652731696,
+            "test_acc": 0.8960521950680084
         },
         "plaintext_xgboost": {
-            "train_acc": 0.9016810440168105,
+            "train_acc": 0.8996626852466268,
             "test_acc": 0.8937299568727193
         },
         "elxgb": {
-            "train_acc": 0.9006303915063039,
-            "test_acc": 0.8948357845847617,
-            "pure_train_time_sec": 752.832879781723,
-            "total_comm_bytes": 20327884.0,
-            "total_comm_mb": 19.386180877685547
+            "train_acc": 0.899441495244415,
+            "test_acc": 0.8942828707287405,
+            "pure_train_time_sec": 354.402375459671,
+            "total_comm_bytes": 23457646.0,
+            "total_comm_mb": 22.370954513549805
         }
     }
 }

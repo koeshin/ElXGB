@@ -182,7 +182,7 @@ if __name__ == "__main__":
     NUM_PARTIES = 2
     BINS = 32
     DP_EPS = 10.0
-    DEPTH = 4
+    DEPTH = 3
     TREE_RANGE = range(2, 7)
     
     for d_name in datasets:

@@ -63,7 +63,7 @@ class ELXGBClassifier:
         
         self.he_svc = HEService()
         self.active_party = ActiveParty(self.he_svc)
-        
+        self.num_passive_parties = num_passive_parties
         # N개의 패시브 파티 동적 생성
         self.passive_parties = {
             f"Party_{i+1}": PassiveParty(eps=self.eps) 
@@ -71,6 +71,7 @@ class ELXGBClassifier:
         }
         
         self.dp_injector = DPNoiseInjector(epsilon=dp_epsilon, delta=1e-5, clip_c=dp_clip_c)
+        self.dp_epsilon = dp_epsilon
 
     def fit(self, X_list: list, y: np.ndarray, feat_names_list: list = None):
         """
@@ -151,15 +152,15 @@ class ELXGBClassifier:
 
         print("\n" + "="*50)
         print(f"[ELXGB] Training Completed. Total Trees: {self.n_estimators}")
-        print(f" ⏱️ Pure Compute Time (Excluding Pre-Encryption): {self.total_pure_train_time:.4f} seconds")
-        print(f" 📡 Total Comm. Volume: {self.total_comm_bytes / 1024 / 1024:.4f} MB")
+        print(f" - Pure Compute Time (Excluding Pre-Encryption): {self.total_pure_train_time:.4f} seconds")
+        print(f" - Total Comm. Volume: {self.total_comm_bytes / 1024 / 1024:.4f} MB")
         print("="*50 + "\n")
 
     def _build_tree_recursive(self, current_mask, depth, node_counter, tree_idx, 
                               g_raw, h_raw, enc_g, enc_h, g_noisy, h_noisy):
         node_id = node_counter.get()
         print('current tree depth:',depth)
-        # 원본 그래디언트로 노드 가중치 및 종료조건(Gain) 평가
+        # 원본 그래디언트로 리프 노드 가중치 및 종료조건(Gain) 평가
         G_total = np.sum(g_raw[current_mask])
         H_total = np.sum(h_raw[current_mask])
         
@@ -185,30 +186,25 @@ class ELXGBClassifier:
             )
         # DPNS (두 번째 트리 이후)
         else:
-            g_masked = g_noisy * current_mask
-            h_masked = h_noisy * current_mask
-            
-            histograms = {}
+            party_best_splits = {}
             for p_name, p_obj in self.passive_parties.items():
-                # 노이즈를 주입한 평문 히스토그램 연산
-                # DPNoiseInjector는 내부의 compute_plaintext_histograms가 반환한 결과를 그대로 받아 노이즈를 더함
-                # DPNS의 핵심적인 부분인, dp_injector의 위치 이동. (원래 패시브 파티 안에 있었으나 외부에서 주입)
-                plain_hists = p_obj.compute_plaintext_histograms(g_masked, h_masked)
+                # [Measure Comm] Passive Party Locally calculates Optimal Split using noisy plaintexts
+                gain, f_idx, b_idx = p_obj.calculate_local_optimal_split_plaintext(
+                    g_noisy=g_noisy, h_noisy=h_noisy, 
+                    current_mask=current_mask,
+                    lambda_val=self.lambda_val, gamma_val=self.gamma_val
+                )
                 
-                # 이 로직상 active_party.calculate_optimal_split_plaintext에 들어가므로,
-                # DP노이즈는 ActiveParty를 거치지만 ActiveParty는 그것이 노이즈가 섞인 것임을 모름
-                # 따라서 패시브 파티가 DP노이즈를 더한 뒤 전송한다는 뜻.
-                # (원래 패시브 파티에서 DP 주입하지만 여기서는 중앙 제어)
-                histograms[p_name] = plain_hists
+                # Active Party로 무거운 전체 데이터 대신 오직 '1등 분할 후보(Metadata)' 하나만 반환!
+                party_best_splits[p_name] = (gain, f_idx, b_idx)
                 
-                # [Measure Comm] Passive -> Active (Noisy Plaintext Histograms)
-                comm_sz = get_comm_bytes(plain_hists)
+                comm_sz = get_comm_bytes((gain, f_idx, b_idx))
                 self.total_comm_bytes += comm_sz
-                print(f"    [COMM] {p_name} -> Active (DP Noisy Histograms): {comm_sz / 1024:.2f} KB")
+                # 바이트 단위로 팍 줄어들기 때문에 표기도 Bytes 단위로 변경!
+                print(f"    [COMM] {p_name} -> Active (DP Best Meta-Split): {comm_sz} Bytes")
             
-            best_split, max_gain = self.active_party.calculate_optimal_split_plaintext(
-                histograms, lambda_val=self.lambda_val, gamma_val=self.gamma_val
-            )
+            # Active Party는 매우 가벼운 메타데이터들로 글로벌 1등만 비교
+            best_split, max_gain = self.active_party.find_global_optimal_split(party_best_splits)
             
         if best_split is not None:
             # Active Party가 찾은 분할 규칙을 다시 Passive로 Broadcasting (실제 분산 프레임워크상 사이즈)

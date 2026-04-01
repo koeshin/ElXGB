@@ -1,0 +1,32 @@
+{
+    "config": {
+        "dataset": "bank_marketing",
+        "n_estimators": 4,
+        "max_depth": 3,
+        "bins": 32,
+        "eps": 0.03125,
+        "learning_rate": 1.0,
+        "dp_epsilon": 10.0,
+        "num_parties": 2,
+        "train_samples": 36168,
+        "test_samples": 9043,
+        "features": 16
+    },
+    "results": {
+        "xgboost_library": {
+            "train_acc": 0.9014598540145985,
+            "test_acc": 0.8959416122968041
+        },
+        "plaintext_xgboost": {
+            "train_acc": 0.9001880115018801,
+            "test_acc": 0.8932876257879022
+        },
+        "elxgb": {
+            "train_acc": 0.8923634151736342,
+            "test_acc": 0.8898595598805706,
+            "pure_train_time_sec": 357.0114812850952,
+            "total_comm_bytes": 22298227.0,
+            "total_comm_mb": 21.265246391296387
+        }
+    }
+}

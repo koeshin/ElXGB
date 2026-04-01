@@ -22,11 +22,11 @@
             "test_acc": 0.8937299568727193
         },
         "elxgb": {
-            "train_acc": 0.9006303915063039,
-            "test_acc": 0.8948357845847617,
-            "pure_train_time_sec": 752.832879781723,
-            "total_comm_bytes": 20327884.0,
-            "total_comm_mb": 19.386180877685547
+            "train_acc": 0.9006856890068569,
+            "test_acc": 0.8942828707287405,
+            "pure_train_time_sec": 754.2878022193909,
+            "total_comm_bytes": 20453501.0,
+            "total_comm_mb": 19.50597858428955
         }
     }
 }
